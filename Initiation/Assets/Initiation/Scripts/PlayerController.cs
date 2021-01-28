@@ -123,6 +123,10 @@ namespace Initiation
 
         void FixedUpdate()
         {
+            if (!isLocalPlayer || !characterController.enabled)
+            {
+                return;
+            }
             Rotate();
         }
     }
