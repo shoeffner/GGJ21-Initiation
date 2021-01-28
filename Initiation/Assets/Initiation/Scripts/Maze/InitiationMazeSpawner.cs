@@ -38,10 +38,10 @@ public class InitiationMazeSpawner : MonoBehaviour
 	GameObject OuterWallsWest;
 
 	[Header("Holes for multiple connections between multiple mazes")]
-	public bool CreateGapInNorthWall = false;
-	public bool CreateGapInSouthWall = false;
-	public bool CreateGapInEastWall = false;
-	public bool CreateGapInWestWall = false;
+	public int CreateGapInNorthWall = -1;
+	public int CreateGapInSouthWall = -1;
+	public int CreateGapInEastWall = -1;
+	public int CreateGapInWestWall = -1;
 
 	// private variables
 	private BasicMazeGenerator mMazeGenerator = null;
@@ -169,18 +169,18 @@ public class InitiationMazeSpawner : MonoBehaviour
 			}
 		}
 
-		if(CreateGapInNorthWall) {
-			Destroy(OuterWallsNorth.transform.GetChild(Random.Range(0,OuterWallsNorth.transform.childCount - 1)).gameObject);
+		if(CreateGapInNorthWall != -1) {
+			Destroy(OuterWallsNorth.transform.GetChild(CreateGapInNorthWall).gameObject);
 		}
-		if(CreateGapInSouthWall) {
-			Destroy(OuterWallsSouth.transform.GetChild(Random.Range(0,OuterWallsSouth.transform.childCount - 1)).gameObject);
+		if(CreateGapInSouthWall != -1) {
+			Destroy(OuterWallsSouth.transform.GetChild(CreateGapInSouthWall).gameObject);
 		}
 
-		if(CreateGapInEastWall) {
-			Destroy(OuterWallsEast.transform.GetChild(Random.Range(0,OuterWallsEast.transform.childCount - 1)).gameObject);
+		if(CreateGapInEastWall != -1) {
+			Destroy(OuterWallsEast.transform.GetChild(CreateGapInEastWall).gameObject);
 		}
-		if(CreateGapInWestWall) {
-			Destroy(OuterWallsWest.transform.GetChild(Random.Range(0,OuterWallsWest.transform.childCount - 1)).gameObject);
+		if(CreateGapInWestWall != -1) {
+			Destroy(OuterWallsWest.transform.GetChild(CreateGapInWestWall).gameObject);
 		}
 
 	}

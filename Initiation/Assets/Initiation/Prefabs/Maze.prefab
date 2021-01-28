@@ -50,7 +50,7 @@ MonoBehaviour:
   Floor:
   - {fileID: 916917378494744782, guid: 6bccdd902ed0b4c17849a36e13506f94, type: 3}
   - {fileID: 916917378494744782, guid: 202a10e5b0d2c489ea72371573458dcf, type: 3}
-  - {fileID: 1378172779303584491, guid: be01a85fde7954a4d8d6b122a4c051f9, type: 3}
+  - {fileID: 916917378494744782, guid: ee4d7747a419346e18cd3c854b91cca9, type: 3}
   - {fileID: 916917378494744782, guid: fa9f6d1e2aece44379109f681fcfb56f, type: 3}
   - {fileID: 916917378494744782, guid: a60b5e88e7ba34215916b9586b2e153b, type: 3}
   Wall:
