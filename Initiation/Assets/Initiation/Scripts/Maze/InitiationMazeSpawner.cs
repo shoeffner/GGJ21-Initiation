@@ -27,35 +27,34 @@ public class InitiationMazeSpawner : MonoBehaviour
 
 	private BasicMazeGenerator mMazeGenerator = null;
 
-	public List<List<GameObject>> MazeCells;
+	public GameObject[,] MazeCells;
 
 	void Start()
 	{
-		MazeCells = new List<List<GameObject>>();
-		for(int i = 0; i < Columns; i++) {
-			MazeCells.Add(new List<GameObject>());			
-		}
+		MazeCells = new GameObject[Rows, Columns];
 
 		if(!FullRandom) {
 			Random.InitState(RandomSeed);
 		}
+
 		switch(Algorithm) {
-		case MazeGenerationAlgorithm.PureRecursive:
-			mMazeGenerator = new RecursiveMazeGenerator(Rows,Columns);
-			break;
-		case MazeGenerationAlgorithm.RecursiveTree:
-			mMazeGenerator = new RecursiveTreeMazeGenerator(Rows,Columns);
-			break;
-		case MazeGenerationAlgorithm.RandomTree:
-			mMazeGenerator = new RandomTreeMazeGenerator(Rows,Columns);
-			break;
-		case MazeGenerationAlgorithm.OldestTree:
-			mMazeGenerator = new OldestTreeMazeGenerator(Rows,Columns);
-			break;
-		case MazeGenerationAlgorithm.RecursiveDivision:
-			mMazeGenerator = new DivisionMazeGenerator(Rows,Columns);
-			break;
+			case MazeGenerationAlgorithm.PureRecursive:
+				mMazeGenerator = new RecursiveMazeGenerator(Rows,Columns);
+				break;
+			case MazeGenerationAlgorithm.RecursiveTree:
+				mMazeGenerator = new RecursiveTreeMazeGenerator(Rows,Columns);
+				break;
+			case MazeGenerationAlgorithm.RandomTree:
+				mMazeGenerator = new RandomTreeMazeGenerator(Rows,Columns);
+				break;
+			case MazeGenerationAlgorithm.OldestTree:
+				mMazeGenerator = new OldestTreeMazeGenerator(Rows,Columns);
+				break;
+			case MazeGenerationAlgorithm.RecursiveDivision:
+				mMazeGenerator = new DivisionMazeGenerator(Rows,Columns);
+				break;
 		}
+
 		mMazeGenerator.GenerateMaze();
 		for(int row = 0; row < Rows; row++) {
 			for(int column = 0; column < Columns; column++) {
@@ -86,12 +85,13 @@ public class InitiationMazeSpawner : MonoBehaviour
 					tmp = Instantiate(GoalPrefab,new Vector3(x,1,z),Quaternion.Euler(0,0,0)) as GameObject;
 					tmp.transform.parent = floor.transform;
 				}
-				MazeCells[column].Add(floor);
+				MazeCells[row, column] = floor;
 			}
 		}
-		if(Pillar != null) {
-			for(int row = 0; row < Rows + 1; row++) {
-				for(int column = 0; column < Columns + 1; column++) {
+
+		if (Pillar != null) {
+			for (int row = 0; row < Rows + 1; row++) {
+				for (int column = 0; column < Columns + 1; column++) {
 					float x = column * (CellWidth + (AddGaps ? .2f : 0));
 					float z = row * (CellHeight + (AddGaps ? .2f : 0));
 					GameObject tmp = Instantiate(Pillar,new Vector3(x - CellWidth / 2,0,z - CellHeight / 2),Quaternion.identity) as GameObject;
