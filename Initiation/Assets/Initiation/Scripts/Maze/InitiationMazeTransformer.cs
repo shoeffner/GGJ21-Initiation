@@ -31,7 +31,7 @@ public class InitiationMazeTransformer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if(Input.GetKeyDown(KeyCode.Space)) {
             List<GameObject> cellsToMove = new List<GameObject>();
 
@@ -43,7 +43,7 @@ public class InitiationMazeTransformer : MonoBehaviour
                 }
             }
 
-            
+
             Hashtable ht = new Hashtable();
             if(moveDirection == MoveDirection.North) {
                 ht.Add(iT.MoveBy.z,maze.CellWidth);
