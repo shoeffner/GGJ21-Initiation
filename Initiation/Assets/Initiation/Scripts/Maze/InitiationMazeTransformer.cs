@@ -57,12 +57,17 @@ public class InitiationMazeTransformer : MonoBehaviour
 
             ht.Add(iT.MoveBy.time, 1.0f);
 
-			ht.Add(iT.MoveBy.oncomplete,"AfterCellsMoved");
+			
 			ht.Add(iT.MoveBy.easetype,iTween.EaseType.linear);
 
-            foreach(GameObject cell in cellsToMove) {
-                iTween.MoveBy(cell,ht);
+            for(int i = 0; i < cellsToMove.Count; i++) {
+                if(i == cellsToMove.Count - 1) {
+                    ht.Add(iT.MoveBy.oncomplete,"AfterCellsMoved");
+                    ht.Add(iT.MoveBy.oncompletetarget,gameObject);
+                }
+                iTween.MoveBy(cellsToMove[i],ht);
             }
+            
         }
     }
 

@@ -28,6 +28,7 @@ public class MazeSpawner : MonoBehaviour {
 
 	private BasicMazeGenerator mMazeGenerator = null;
 
+	
 	void Start () {
 		if (!FullRandom) {
 			Random.InitState(RandomSeed);
