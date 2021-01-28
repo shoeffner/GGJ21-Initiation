@@ -23,6 +23,11 @@ public class InitiationMazeTransformer : MonoBehaviour
         maze = GetComponent<InitiationMazeSpawner>();
     }
 
+
+    public void AfterCellsMoved() {
+        print("cells moved");
+	}
+
     // Update is called once per frame
     void Update()
     {
@@ -51,11 +56,9 @@ public class InitiationMazeTransformer : MonoBehaviour
             }
 
             ht.Add(iT.MoveBy.time, 1.0f);
-            //ht.Add(iT.MoveBy.oncomplete,(Action<object>)(newVal => {
-            //    //print("tween finihed!!!!");
-                
-            //}));
-            ht.Add(iT.MoveBy.easetype,iTween.EaseType.linear);
+
+			ht.Add(iT.MoveBy.oncomplete,"AfterCellsMoved");
+			ht.Add(iT.MoveBy.easetype,iTween.EaseType.linear);
 
             foreach(GameObject cell in cellsToMove) {
                 iTween.MoveBy(cell,ht);
