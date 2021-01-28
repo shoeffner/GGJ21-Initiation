@@ -3,14 +3,13 @@ using Mirror;
 
 namespace Initiation
 {
-    //[RequireComponent(typeof(NetworkTransform))]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : NetworkBehaviour
     {
         public CharacterController characterController;
 
-        public new Camera camera;
+        public Camera mainCamera;
         public Vector3 cameraOffset = new Vector3(2, 4, -2);
         public Vector3 cameraLookAtOffset = new Vector3(0, 2, 0);
 
@@ -21,6 +20,8 @@ namespace Initiation
         private Vector3 right = Vector3.right;
 
         private Vector3 gravitySpeed = Vector3.zero;
+
+        private Animator animator = null;
         
 
         void OnValidate()
@@ -34,10 +35,14 @@ namespace Initiation
         void Start()
         {
             characterController.enabled = isLocalPlayer;
-            if (camera == null)
+            if (mainCamera == null)
             {
-                camera = Camera.main;
+                mainCamera = Camera.main;
                 UpdateCamera();
+            }
+            if (animator == null)
+            {
+                animator = GetComponentInChildren<Animator>();
             }
         }
 
@@ -52,10 +57,10 @@ namespace Initiation
 
         void UpdateCamera()
         {
-            camera.transform.position = transform.position + cameraOffset;
-            camera.transform.LookAt(transform.position + cameraLookAtOffset);
-            forward = Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up).normalized;
-            right = Vector3.ProjectOnPlane(camera.transform.right, Vector3.up).normalized;
+            mainCamera.transform.position = transform.position + cameraOffset;
+            mainCamera.transform.LookAt(transform.position + cameraLookAtOffset);
+            forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
+            right = Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up).normalized;
         }
 
         void Move()
@@ -64,7 +69,7 @@ namespace Initiation
             float inputVertical = Input.GetAxis("Vertical");
             Vector3 forwardMovement = forward * inputVertical;
             Vector3 rightMovement = right * inputHorizontal;
-            Vector3 moveDirection =(forwardMovement + rightMovement).normalized;
+            Vector3 moveDirection = (forwardMovement + rightMovement).normalized;
 
             if (characterController.isGrounded)
             {
@@ -76,6 +81,18 @@ namespace Initiation
             }
 
             characterController.Move((moveDirection * moveSpeed + gravitySpeed) * Time.deltaTime);
+
+            if (Mathf.Abs(inputHorizontal + inputVertical) < 0.001f)
+            {
+                animator.SetFloat("Forward", 0);
+                animator.SetFloat("Rightward", 0);
+            } 
+            else
+            {
+                Vector3 movement = Quaternion.AngleAxis(-Vector3.SignedAngle(moveDirection, transform.forward, Vector3.up), Vector3.up) * Vector3.forward;
+                animator.SetFloat("Forward", movement.z * forwardMovement.magnitude);
+                animator.SetFloat("Rightward", movement.x * rightMovement.magnitude);
+            }
         }
 
         void Rotate()
@@ -91,6 +108,7 @@ namespace Initiation
                 Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
                 GetComponent<Rigidbody>().MoveRotation(newRotatation);
             }
+            
         }
 
         void Update()
