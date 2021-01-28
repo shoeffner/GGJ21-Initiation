@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable CS0414
+using UnityEngine;
 using System.Collections;
 
 //<summary>
@@ -76,3 +77,4 @@ public class RollerBall : MonoBehaviour {
 		}
 	}
 }
+#pragma warning restore CS0414

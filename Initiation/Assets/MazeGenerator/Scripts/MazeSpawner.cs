@@ -31,7 +31,7 @@ public class MazeSpawner : MonoBehaviour {
 	
 	void Start () {
 		if (!FullRandom) {
-			Random.seed = RandomSeed;
+			Random.InitState(RandomSeed);
 		}
 		switch (Algorithm) {
 		case MazeGenerationAlgorithm.PureRecursive:
