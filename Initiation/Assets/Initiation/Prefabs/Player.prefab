@@ -81,7 +81,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 5341382351210672809}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.25281805
   m_Height: 1.894285
   m_Direction: 1
@@ -135,6 +135,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   characterController: {fileID: 7216218384059027683}
+  camera: {fileID: 0}
+  cameraOffset: {x: 5.24, y: 6.1, z: -5.4}
+  cameraLookAtOffset: {x: 0, y: 2.37, z: 0}
   moveSpeed: 7.5
   jumpHeight: 1.2
 --- !u!95 &1585012928489045456
