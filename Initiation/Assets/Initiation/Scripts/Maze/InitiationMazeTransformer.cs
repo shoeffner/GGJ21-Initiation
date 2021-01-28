@@ -9,7 +9,7 @@ using System.Linq;
 public class InitiationMazeTransformer : MonoBehaviour
 {
     InitiationMazeSpawner maze;
-    List<GameObject> cellsToMove;
+    //List<GameObject> cellsToMove;
     public enum MoveDirection {
         North,
         South,
