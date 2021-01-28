@@ -15,9 +15,9 @@ public class InitiationMazeSpawner : MonoBehaviour
 	public MazeGenerationAlgorithm Algorithm = MazeGenerationAlgorithm.PureRecursive;
 	public bool FullRandom = false;
 	public int RandomSeed = 12345;
-	public GameObject Floor = null;
-	public GameObject Wall = null;
-	public GameObject Pillar = null;
+	public List<GameObject> Floor;
+	public List<GameObject> Wall;
+	public List<GameObject> Pillar;
 	public int Rows = 8;
 	public int Columns = 8;
 	public float CellWidth = 4;
@@ -105,10 +105,11 @@ public class InitiationMazeSpawner : MonoBehaviour
 				MazeCell cell = mMazeGenerator.GetMazeCell(row,column);
 				GameObject tmp;
 				GameObject floor;
-				floor = Instantiate(Floor,new Vector3(x,y,z),Quaternion.Euler(0,0,0)) as GameObject;
+				floor = Instantiate(Floor[Random.Range(0,Floor.Count-1)],new Vector3(x,y,z),Quaternion.Euler(0,0,0)) as GameObject;
 				floor.transform.parent = transform;				
 				if(cell.WallLeft) {
-					tmp = Instantiate(Wall,new Vector3(x - CellWidth / 2,y,z) + Wall.transform.position,Quaternion.Euler(0,270,0)) as GameObject;// left
+					int wallIdx = Random.Range(0,Wall.Count - 1);
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x - CellWidth / 2,y,z) + Wall[wallIdx].transform.position,Quaternion.Euler(0,270,0)) as GameObject;// left
 					if(column == 0) {
 						tmp.transform.parent = OuterWallsEast.transform;						
 					} else {
@@ -117,7 +118,8 @@ public class InitiationMazeSpawner : MonoBehaviour
 				}
 
 				if(cell.WallRight) {
-					tmp = Instantiate(Wall,new Vector3(x + CellWidth / 2,y,z) + Wall.transform.position,Quaternion.Euler(0,90,0)) as GameObject;// right
+					int wallIdx = Random.Range(0,Wall.Count - 1);
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x + CellWidth / 2,y,z) + Wall[wallIdx].transform.position,Quaternion.Euler(0,90,0)) as GameObject;// right
 					if(column == Columns- 1) {
 						tmp.transform.parent = OuterWallsWest.transform;
 					} else {
@@ -125,7 +127,8 @@ public class InitiationMazeSpawner : MonoBehaviour
 					}
 				}
 				if(cell.WallFront) {
-					tmp = Instantiate(Wall,new Vector3(x,y,z + CellHeight / 2) + Wall.transform.position,Quaternion.Euler(0,0,0)) as GameObject;// front
+					int wallIdx = Random.Range(0,Wall.Count - 1);
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x,y,z + CellHeight / 2) + Wall[wallIdx].transform.position,Quaternion.Euler(0,0,0)) as GameObject;// front
 					if(row == Rows - 1) {
 						tmp.transform.parent = OuterWallsNorth.transform;
 					} else {
@@ -134,7 +137,8 @@ public class InitiationMazeSpawner : MonoBehaviour
 				}
 				
 				if(cell.WallBack) {
-					tmp = Instantiate(Wall,new Vector3(x,y,z - CellHeight / 2) + Wall.transform.position,Quaternion.Euler(0,180,0)) as GameObject;// back
+					int wallIdx = Random.Range(0,Wall.Count - 1);
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x,y,z - CellHeight / 2) + Wall[wallIdx].transform.position,Quaternion.Euler(0,180,0)) as GameObject;// back
 					if(row == 0) {
 						tmp.transform.parent = OuterWallsSouth.transform;
 					} else {
@@ -157,7 +161,9 @@ public class InitiationMazeSpawner : MonoBehaviour
 					float x = CellWidth/2 - (Columns * CellWidth / 2) + transform.position.x + column * (CellWidth + (AddGaps ? .2f : 0));
 					float y = transform.position.y;
 					float z = CellWidth/2 - (Columns * CellWidth / 2) + transform.position.z + row * (CellHeight + (AddGaps ? .2f : 0));
-					GameObject tmp = Instantiate(Pillar,new Vector3(x - CellWidth / 2,y,z - CellHeight / 2),Quaternion.identity) as GameObject;
+					int pillarIdx = Random.Range(0,Pillar.Count - 1);
+
+					GameObject tmp = Instantiate(Pillar[pillarIdx],new Vector3(x - CellWidth / 2,y,z - CellHeight / 2),Quaternion.identity) as GameObject;
 					tmp.transform.parent = transform;
 				}
 			}
