@@ -33,9 +33,7 @@ public class InitiationMazeSpawner : MonoBehaviour
 	{
 		MazeCells = new List<List<GameObject>>();
 		for(int i = 0; i < Columns; i++) {
-			for(int j = 0; j < Rows; j++) {
-				MazeCells.Add(new List<GameObject>());
-			}
+			MazeCells.Add(new List<GameObject>());			
 		}
 
 		if(!FullRandom) {
@@ -88,7 +86,7 @@ public class InitiationMazeSpawner : MonoBehaviour
 					tmp = Instantiate(GoalPrefab,new Vector3(x,1,z),Quaternion.Euler(0,0,0)) as GameObject;
 					tmp.transform.parent = floor.transform;
 				}
-				MazeCells[Mathf.FloorToInt(x)][Mathf.FloorToInt(z)] = floor;
+				MazeCells[column].Add(floor);
 			}
 		}
 		if(Pillar != null) {
