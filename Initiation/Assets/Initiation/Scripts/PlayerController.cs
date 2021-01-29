@@ -30,6 +30,19 @@ namespace Initiation
             {
                 characterController = GetComponent<CharacterController>();
             }
+            if (mainCamera == null)
+            {
+                mainCamera = Camera.main;
+            }
+            if (animator == null)
+            {
+                animator = GetComponentInChildren<Animator>();
+            }
+        }
+
+        public void ReceiveDamage(float damage)
+        {
+            Debug.Log($"I'm hit! ({damage} damage)");
         }
 
         void Start()
@@ -38,7 +51,6 @@ namespace Initiation
             if (mainCamera == null)
             {
                 mainCamera = Camera.main;
-                UpdateCamera();
             }
             if (animator == null)
             {
@@ -48,6 +60,7 @@ namespace Initiation
 
         public override void OnStartLocalPlayer()
         {
+            UpdateCamera();
         }
 
         void OnDisable()
