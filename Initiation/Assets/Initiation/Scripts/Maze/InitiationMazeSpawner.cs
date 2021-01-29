@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using Mirror;
+
 public class InitiationMazeSpawner : NetworkBehaviour
 {
 	public enum MazeGenerationAlgorithm {
@@ -12,6 +14,8 @@ public class InitiationMazeSpawner : NetworkBehaviour
 		RecursiveDivision,
 	}
 
+	
+	[Header("Maze Generation Settings")]
 	public MazeGenerationAlgorithm Algorithm = MazeGenerationAlgorithm.PureRecursive;
 	public bool FullRandom = false;
 	public int RandomSeed = 12345;
@@ -49,7 +53,7 @@ public class InitiationMazeSpawner : NetworkBehaviour
 	private void Start()
 	{
 		if(isServer) {
-			Generate();
+			Generate();			
 		}
 	}
 

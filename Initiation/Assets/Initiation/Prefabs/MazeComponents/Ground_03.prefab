@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1563464522814601850}
   - component: {fileID: 718305057085342310}
   - component: {fileID: 5794924578136378480}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916917378494744782}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

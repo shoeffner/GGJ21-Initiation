@@ -92,6 +92,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b66c8d31cdc5445586f27d9610d9742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mazeComponents:
+  - {fileID: 916917378494744782, guid: 6bccdd902ed0b4c17849a36e13506f94, type: 3}
+  - {fileID: 916917378494744782, guid: 202a10e5b0d2c489ea72371573458dcf, type: 3}
+  - {fileID: 916917378494744782, guid: ee4d7747a419346e18cd3c854b91cca9, type: 3}
+  - {fileID: 916917378494744782, guid: fa9f6d1e2aece44379109f681fcfb56f, type: 3}
+  - {fileID: 916917378494744782, guid: a60b5e88e7ba34215916b9586b2e153b, type: 3}
+  - {fileID: 3713104444964819695, guid: b083a625e44aa4d2c8f21f74f80a27b9, type: 3}
+  - {fileID: 7779381877309823848, guid: 778f2a0035db3493a9c16a37c810dc1d, type: 3}
+  - {fileID: 7779381877309823848, guid: 6e13288c093874bbd8d3b933636ad26d, type: 3}
+  - {fileID: 7779381877309823848, guid: 99930da3452d54e1cb980712721d1461, type: 3}
+  - {fileID: 7779381877309823848, guid: 3147d36c2dbec409a9d2d2b60bf2afc7, type: 3}
   moveDirection: 0
   cellIdx: 0
 --- !u!114 &8890210583153299237

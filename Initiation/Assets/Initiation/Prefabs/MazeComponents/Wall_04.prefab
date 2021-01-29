@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: -689809864505741825}
   - component: {fileID: 8167573937605147657}
   - component: {fileID: 4572523704211827287}
+  - component: {fileID: 274968783643187874}
   m_Layer: 0
   m_Name: Wall_04
   m_TagString: Untagged
@@ -243,6 +244,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2def11be8b1d24474863674dd3b5d78c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: 0
+--- !u!208 &274968783643187874
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7779381877309823848}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 2, z: 0.097}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 2, z: 0.097}
+  m_TimeToStationary: 0.5
 --- !u!1001 &123223294804371749
 PrefabInstance:
   m_ObjectHideFlags: 0

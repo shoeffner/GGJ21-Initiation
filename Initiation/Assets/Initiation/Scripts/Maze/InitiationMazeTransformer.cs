@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+
 using Mirror;
+
 
 [RequireComponent(typeof(InitiationMazeSpawner))]
 public class InitiationMazeTransformer : MonoBehaviour
@@ -13,6 +14,7 @@ public class InitiationMazeTransformer : MonoBehaviour
 	Dictionary<string,GameObject> mazeComponentsDict;
 
 	InitiationMazeSpawner maze;
+	
 
 	public enum MoveDirection {
 		North,
@@ -45,8 +47,7 @@ public class InitiationMazeTransformer : MonoBehaviour
 		}
 	}
 
-	public void AfterCellsMoved(GameObject toDelete=null) {
-		print("AfterCellsMoved");
+	public void AfterCellsMoved(GameObject toDelete=null) {		
 		if (toDelete != null)
 		{
 			NetworkTransformChild[] ntcs = toDelete.GetComponents<NetworkTransformChild>();
@@ -60,7 +61,10 @@ public class InitiationMazeTransformer : MonoBehaviour
 		}
 	}
 
+	
+
 	GameObject CreateCell(GameObject cell, Vector3 pos) {
+		
 		GameObject newCell = Instantiate(mazeComponentsDict[cell.name]);
 		newCell.transform.position = pos;
 		newCell.name = cell.name;
