@@ -13,6 +13,8 @@ namespace Initiation
         public Vector3 cameraOffset = new Vector3(2, 4, -2);
         public Vector3 cameraLookAtOffset = new Vector3(0, 2, 0);
 
+        public string groundLayer = "Ground";
+
         public float moveSpeed = 7.5f;
         public float jumpHeight = 1.2f;
 
@@ -114,7 +116,7 @@ namespace Initiation
             Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit floorHit;
-            if (Physics.Raycast(camRay, out floorHit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+            if (Physics.Raycast(camRay, out floorHit, Mathf.Infinity, LayerMask.GetMask(groundLayer)))
             {
                 Vector3 playerToMouse = floorHit.point - transform.position;
                 playerToMouse.y = 0f;
