@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class InitiationMazeSpawner : MonoBehaviour
+using Mirror;
+public class InitiationMazeSpawner : NetworkBehaviour
 {
 	public enum MazeGenerationAlgorithm {
 		PureRecursive,
@@ -30,12 +30,12 @@ public class InitiationMazeSpawner : MonoBehaviour
 	[HideInInspector]
 	public GameObject[,] MazeCells;
 
-	[HideInInspector]
+	
 	public GameObject OuterWalls;
-	GameObject OuterWallsNorth;
-	GameObject OuterWallsSouth;
-	GameObject OuterWallsEast;
-	GameObject OuterWallsWest;
+	public GameObject OuterWallsNorth;
+	public GameObject OuterWallsSouth;
+	public GameObject OuterWallsEast;
+	public GameObject OuterWallsWest;
 
 	[Header("Holes for multiple connections between multiple mazes")]
 	public int CreateGapInNorthWall = -1;
@@ -46,33 +46,38 @@ public class InitiationMazeSpawner : MonoBehaviour
 	// private variables
 	private BasicMazeGenerator mMazeGenerator = null;
 
+	private void Start()
+	{
+		if(isServer) {
+			Generate();
+		}
+	}
 
-
-	void Start()
+	void Generate()
 	{
 		MazeCells = new GameObject[Rows, Columns];
 
-		if(OuterWalls == null) {
-			OuterWalls = new GameObject("OuterWalls");
-			OuterWalls.transform.position = transform.position;
-			OuterWalls.transform.parent = transform;
+		//if(OuterWalls == null) {
+		//	OuterWalls = new GameObject("OuterWalls");
+		//	OuterWalls.transform.position = transform.position;
+		//	OuterWalls.transform.parent = transform;
 
-			OuterWallsNorth = new GameObject("OuterWallsNorth");
-			OuterWallsNorth.transform.position = OuterWalls.transform.position;
-			OuterWallsNorth.transform.parent = OuterWalls.transform;
+		//	OuterWallsNorth = new GameObject("OuterWallsNorth");
+		//	OuterWallsNorth.transform.position = OuterWalls.transform.position;
+		//	OuterWallsNorth.transform.parent = OuterWalls.transform;
 
-			OuterWallsSouth = new GameObject("OuterWallsSouth");
-			OuterWallsSouth.transform.position = OuterWalls.transform.position;
-			OuterWallsSouth.transform.parent = OuterWalls.transform;
+		//	OuterWallsSouth = new GameObject("OuterWallsSouth");
+		//	OuterWallsSouth.transform.position = OuterWalls.transform.position;
+		//	OuterWallsSouth.transform.parent = OuterWalls.transform;
 
-			OuterWallsEast = new GameObject("OuterWallsEast");
-			OuterWallsEast.transform.position = OuterWalls.transform.position;
-			OuterWallsEast.transform.parent = OuterWalls.transform;
+		//	OuterWallsEast = new GameObject("OuterWallsEast");
+		//	OuterWallsEast.transform.position = OuterWalls.transform.position;
+		//	OuterWallsEast.transform.parent = OuterWalls.transform;
 
-			OuterWallsWest = new GameObject("OuterWallsWest");
-			OuterWallsWest.transform.position = OuterWalls.transform.position;
-			OuterWallsWest.transform.parent = OuterWalls.transform;
-		}
+		//	OuterWallsWest = new GameObject("OuterWallsWest");
+		//	OuterWallsWest.transform.position = OuterWalls.transform.position;
+		//	OuterWallsWest.transform.parent = OuterWalls.transform;
+		//}
 
 		if(!FullRandom) {
 			Random.InitState(RandomSeed);
@@ -97,6 +102,7 @@ public class InitiationMazeSpawner : MonoBehaviour
 		}
 
 		mMazeGenerator.GenerateMaze();
+		
 		for(int row = 0; row < Rows; row++) {
 			for(int column = 0; column < Columns; column++) {
 				float x = CellWidth/2 - (Columns * CellWidth / 2) + transform.position.x + column * (CellWidth + (AddGaps ? .2f : 0));
@@ -105,52 +111,73 @@ public class InitiationMazeSpawner : MonoBehaviour
 				MazeCell cell = mMazeGenerator.GetMazeCell(row,column);
 				GameObject tmp;
 				GameObject floor;
-				floor = Instantiate(Floor[Random.Range(0,Floor.Count-1)],new Vector3(x,y,z),Quaternion.Euler(0,0,0)) as GameObject;
-				floor.transform.parent = transform;				
+				NetworkTransformChild tnc = gameObject.AddComponent<NetworkTransformChild>();
+				int floorIdx = Random.Range(0,Floor.Count - 1);
+				floor = Instantiate(Floor[floorIdx],new Vector3(x,y,z),Quaternion.Euler(0,0,0)) as GameObject;
+				floor.name = Floor[floorIdx].name;
+				tnc.target = floor.transform;
+				NetworkServer.Spawn(floor);				
+
 				if(cell.WallLeft) {
 					int wallIdx = Random.Range(0,Wall.Count - 1);
-					tmp = Instantiate(Wall[wallIdx],new Vector3(x - CellWidth / 2,y,z) + Wall[wallIdx].transform.position,Quaternion.Euler(0,270,0)) as GameObject;// left
+					NetworkTransformChild parent;
 					if(column == 0) {
-						tmp.transform.parent = OuterWallsEast.transform;						
+						parent = OuterWallsEast.AddComponent<NetworkTransformChild>();
 					} else {
-						tmp.transform.parent = floor.transform;
+						parent = floor.AddComponent<NetworkTransformChild>();
 					}
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x - CellWidth / 2,y,z) + Wall[wallIdx].transform.position,Quaternion.Euler(0,270,0)) as GameObject;// left					
+					tmp.name = Wall[wallIdx].name;
+					parent.target = tmp.transform;
+					NetworkServer.Spawn(tmp);
 				}
 
 				if(cell.WallRight) {
 					int wallIdx = Random.Range(0,Wall.Count - 1);
-					tmp = Instantiate(Wall[wallIdx],new Vector3(x + CellWidth / 2,y,z) + Wall[wallIdx].transform.position,Quaternion.Euler(0,90,0)) as GameObject;// right
-					if(column == Columns- 1) {
-						tmp.transform.parent = OuterWallsWest.transform;
+					NetworkTransformChild parent;
+					if(column == Columns - 1) {
+						parent = OuterWallsWest.AddComponent<NetworkTransformChild>();
 					} else {
-						tmp.transform.parent = floor.transform;
+						parent = floor.AddComponent<NetworkTransformChild>();
 					}
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x + CellWidth / 2,y,z) + Wall[wallIdx].transform.position,Quaternion.Euler(0,90,0)) as GameObject;// right					
+					tmp.name = Wall[wallIdx].name;
+					parent.target = tmp.transform;
+					NetworkServer.Spawn(tmp);
 				}
 				if(cell.WallFront) {
 					int wallIdx = Random.Range(0,Wall.Count - 1);
-					tmp = Instantiate(Wall[wallIdx],new Vector3(x,y,z + CellHeight / 2) + Wall[wallIdx].transform.position,Quaternion.Euler(0,0,0)) as GameObject;// front
+					NetworkTransformChild parent;
 					if(row == Rows - 1) {
-						tmp.transform.parent = OuterWallsNorth.transform;
+						parent = OuterWallsNorth.AddComponent<NetworkTransformChild>();
 					} else {
-						tmp.transform.parent = floor.transform;
+						parent = floor.AddComponent<NetworkTransformChild>();
 					}
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x,y,z + CellHeight / 2) + Wall[wallIdx].transform.position,Quaternion.Euler(0,0,0)) as GameObject;// front					
+					tmp.name = Wall[wallIdx].name;
+					parent.target = tmp.transform;
+					NetworkServer.Spawn(tmp);
 				}
 				
 				if(cell.WallBack) {
+					NetworkTransformChild parent;
 					int wallIdx = Random.Range(0,Wall.Count - 1);
-					tmp = Instantiate(Wall[wallIdx],new Vector3(x,y,z - CellHeight / 2) + Wall[wallIdx].transform.position,Quaternion.Euler(0,180,0)) as GameObject;// back
 					if(row == 0) {
-						tmp.transform.parent = OuterWallsSouth.transform;
+						parent = OuterWallsSouth.AddComponent<NetworkTransformChild>(); ;
 					} else {
-						tmp.transform.parent = floor.transform;
+						parent = floor.AddComponent<NetworkTransformChild>();
 					}
+					tmp = Instantiate(Wall[wallIdx],new Vector3(x,y,z - CellHeight / 2) + Wall[wallIdx].transform.position,Quaternion.Euler(0,180,0)) as GameObject;// back					
+					tmp.name = Wall[wallIdx].name;
+					parent.target = tmp.transform;
+					NetworkServer.Spawn(tmp);
 
-					
 				}
-				if(cell.IsGoal && GoalPrefab != null) {
-					tmp = Instantiate(GoalPrefab,new Vector3(x, y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
-					tmp.transform.parent = floor.transform;
-				}
+				//if(cell.IsGoal && GoalPrefab != null) {
+				//	tmp = Instantiate(GoalPrefab,new Vector3(x, y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
+				//	tmp.transform.parent = floor.transform;
+				//	NetworkServer.Spawn(tmp);
+				//}
 				MazeCells[row, column] = floor;
 			}
 		}
@@ -164,24 +191,43 @@ public class InitiationMazeSpawner : MonoBehaviour
 					int pillarIdx = Random.Range(0,Pillar.Count - 1);
 
 					GameObject tmp = Instantiate(Pillar[pillarIdx],new Vector3(x - CellWidth / 2,y,z - CellHeight / 2),Quaternion.identity) as GameObject;
-					tmp.transform.parent = transform;
+					NetworkTransformChild tnc = gameObject.AddComponent<NetworkTransformChild>();
+					tmp.name = Pillar[pillarIdx].name;
+					tnc.target = tmp.transform;
+					NetworkServer.Spawn(tmp);
 				}
 			}
 		}
 
 		if(CreateGapInNorthWall != -1) {
-			Destroy(OuterWallsNorth.transform.GetChild(CreateGapInNorthWall).gameObject);
+			NetworkTransformChild ntc = OuterWallsNorth.GetComponents<NetworkTransformChild>()[CreateGapInNorthWall];
+			GameObject obj = ntc.target.gameObject;
+			Destroy(ntc);
+			NetworkServer.Destroy(obj);
+			Destroy(obj);
 		}
 		if(CreateGapInSouthWall != -1) {
-			Destroy(OuterWallsSouth.transform.GetChild(CreateGapInSouthWall).gameObject);
+			NetworkTransformChild ntc = OuterWallsSouth.GetComponents<NetworkTransformChild>()[CreateGapInSouthWall];
+			GameObject obj = ntc.target.gameObject;
+			Destroy(ntc);
+			NetworkServer.Destroy(obj);
+			Destroy(obj);
 		}
 
 		if(CreateGapInEastWall != -1) {
-			Destroy(OuterWallsEast.transform.GetChild(CreateGapInEastWall).gameObject);
-		}
-		if(CreateGapInWestWall != -1) {
-			Destroy(OuterWallsWest.transform.GetChild(CreateGapInWestWall).gameObject);
+			NetworkTransformChild ntc = OuterWallsEast.GetComponents<NetworkTransformChild>()[CreateGapInEastWall];
+			GameObject obj = ntc.target.gameObject;
+			Destroy(ntc);
+			NetworkServer.Destroy(obj);
+			Destroy(obj);
 		}
 
+		if(CreateGapInWestWall != -1) {
+			NetworkTransformChild ntc = OuterWallsWest.GetComponents<NetworkTransformChild>()[CreateGapInWestWall];
+			GameObject obj = ntc.target.gameObject;
+			Destroy(ntc);
+			NetworkServer.Destroy(obj);
+			Destroy(obj);
+		}
 	}
 }
