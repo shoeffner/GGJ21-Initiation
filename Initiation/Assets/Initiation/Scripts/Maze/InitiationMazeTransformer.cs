@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+
 using Mirror;
+
 
 [RequireComponent(typeof(InitiationMazeSpawner))]
 public class InitiationMazeTransformer : MonoBehaviour
@@ -13,6 +14,7 @@ public class InitiationMazeTransformer : MonoBehaviour
 	Dictionary<string,GameObject> mazeComponentsDict;
 
 	InitiationMazeSpawner maze;
+	
 
 	public enum MoveDirection {
 		North,
@@ -30,6 +32,7 @@ public class InitiationMazeTransformer : MonoBehaviour
 	{
 		{iT.MoveBy.time, 1.0f},
 		{iT.MoveBy.easetype, iTween.EaseType.linear},
+		{iT.MoveBy.space, Space.World}
 	};
 
 	
@@ -44,19 +47,47 @@ public class InitiationMazeTransformer : MonoBehaviour
 		}
 	}
 
-	public void AfterCellsMoved(GameObject toDelete=null) {
+	public void AfterCellsMoved(GameObject toDelete=null) {		
 		if (toDelete != null)
 		{
-				NetworkServer.Destroy(toDelete);
-				//Destroy(toDelete);
-				moving = false;
+			NetworkTransformChild[] ntcs = toDelete.GetComponents<NetworkTransformChild>();
+			foreach(NetworkTransformChild ntc in ntcs) {
+				NetworkServer.Destroy(ntc.target.gameObject);				
+			}
+			NetworkServer.Destroy(toDelete);
+			
+
+			moving = false;
 		}
 	}
 
+	
+
+	GameObject CreateCell(GameObject cell, Vector3 pos) {
+		
+		GameObject newCell = Instantiate(mazeComponentsDict[cell.name]);
+		newCell.transform.position = pos;
+		newCell.name = cell.name;
+		NetworkServer.Spawn(newCell);
+		NetworkTransformChild[] ntcs = cell.GetComponents<NetworkTransformChild>();
+		foreach(NetworkTransformChild ntc in ntcs) {
+			GameObject child = Instantiate(mazeComponentsDict[ntc.target.name]);
+			child.GetComponent<InitiationMazeWall>().InitWall(ntc.target.GetComponent<InitiationMazeWall>().direction,
+				maze.CellWidth,maze.CellHeight,Vector3.zero,pos.x,pos.y,pos.z);
+			//child.transform.position = ntc.target.position;
+			//child.transform.rotation = ntc.target.rotation;			
+			child.name = ntc.target.name;
+			NetworkTransformChild newNTC = newCell.AddComponent<NetworkTransformChild>();
+			newNTC.target = child.transform;
+			NetworkServer.Spawn(child);			
+		}
+		return newCell;
+	}
+
 	/**
-		* index is always from W -> E for N and S
-		* index is always from S -> N for E and W
-		*/
+	* index is always from W -> E for N and S
+	* index is always from S -> N for E and W
+	*/
 	public void AlterMaze(MoveDirection moveDirection, int index)
 	{
 		if (moving)
@@ -97,24 +128,30 @@ public class InitiationMazeTransformer : MonoBehaviour
 		switch (moveDirection)
 		{
 			case MoveDirection.North:
-				iTweenParams.Add(iT.MoveBy.z, maze.CellWidth);
+				
 				first = maze.MazeCells[maze.Rows - 1, index];
 				last = maze.MazeCells[0, index];
 
+				iTweenParams.Add(iT.MoveBy.z,maze.CellWidth);
+				
 				for (int row = maze.Rows - 1; row >= 0; --row)
 				{
 					if (maze.MazeCells[row, index] == last)
 					{
-						GameObject replace = Instantiate(first);
-						replace.transform.position = last.transform.position - new Vector3(0, 0, maze.CellWidth);
-						//NetworkServer.Spawn(replace);
+						GameObject replace = CreateCell(first, last.transform.position - new Vector3(0,0,maze.CellWidth));
 						maze.MazeCells[row, index] = replace;
 					}
 					else
 					{
 						maze.MazeCells[row, index] = maze.MazeCells[row - 1, index];
 					}
-					iTween.MoveBy(maze.MazeCells[row, index], new Hashtable(iTweenParams));
+					
+				//Hashtable ht = new Hashtable(iTweenParams);
+					iTween.MoveBy(maze.MazeCells[row, index],new Hashtable(iTweenParams));
+					NetworkTransformChild[] ntcs = maze.MazeCells[row,index].GetComponents<NetworkTransformChild>();
+					foreach(NetworkTransformChild ntc in ntcs) {
+						iTween.MoveBy(ntc.target.gameObject,new Hashtable(iTweenParams));
+					}
 				}
 				break;
 			case MoveDirection.South:
@@ -126,16 +163,20 @@ public class InitiationMazeTransformer : MonoBehaviour
 				{
 					if (maze.MazeCells[row, index] == last)
 					{
-						GameObject replace = Instantiate(first);
-						replace.transform.position = last.transform.position + new Vector3(0, 0, maze.CellWidth);
-						//NetworkServer.Spawn(replace);
+						GameObject replace = CreateCell(first,last.transform.position + new Vector3(0,0,maze.CellWidth));
 						maze.MazeCells[row, index] = replace;
 					}
 					else
 					{
 						maze.MazeCells[row, index] = maze.MazeCells[row + 1, index];
 					}
-					iTween.MoveBy(maze.MazeCells[row, index], new Hashtable(iTweenParams));
+					Hashtable ht = new Hashtable(iTweenParams);
+					iTween.MoveBy(maze.MazeCells[row, index], ht);
+					NetworkTransformChild[] ntcs = maze.MazeCells[row,index].GetComponents<NetworkTransformChild>();
+					foreach(NetworkTransformChild ntc in ntcs) {
+						iTween.MoveBy(ntc.target.gameObject, ht);
+					}
+
 				}
 				break;
 			case MoveDirection.West:
@@ -147,16 +188,19 @@ public class InitiationMazeTransformer : MonoBehaviour
 				{
 					if (maze.MazeCells[index, col] == last)
 					{
-						GameObject replace = Instantiate(first);
-						replace.transform.position = last.transform.position + new Vector3(maze.CellWidth, 0, 0);
-						//NetworkServer.Spawn(replace);
+						GameObject replace = CreateCell(first,last.transform.position + new Vector3(maze.CellWidth,0,0));
 						maze.MazeCells[index, col] = replace;
 					}
 					else
 					{
 						maze.MazeCells[index, col] = maze.MazeCells[index, col + 1];
 					}
-					iTween.MoveBy(maze.MazeCells[index, col], new Hashtable(iTweenParams));
+					Hashtable ht = new Hashtable(iTweenParams);
+					iTween.MoveBy(maze.MazeCells[index, col], ht);
+					NetworkTransformChild[] ntcs = maze.MazeCells[index, col].GetComponents<NetworkTransformChild>();
+					foreach(NetworkTransformChild ntc in ntcs) {
+						iTween.MoveBy(ntc.target.gameObject,ht);
+					}
 				}
 				break;
 			case MoveDirection.East:
@@ -168,15 +212,19 @@ public class InitiationMazeTransformer : MonoBehaviour
 				{
 					if (maze.MazeCells[index, col] == last)
 					{
-						GameObject replace = Instantiate(first);
-						replace.transform.position = last.transform.position - new Vector3(maze.CellWidth, 0, 0);
+						GameObject replace = CreateCell(first,last.transform.position - new Vector3(maze.CellWidth,0,0));
 						maze.MazeCells[index, col] = replace;
 					}
 					else
 					{
 						maze.MazeCells[index, col] = maze.MazeCells[index, col - 1];
 					}
-					iTween.MoveBy(maze.MazeCells[index, col], new Hashtable(iTweenParams));
+					Hashtable ht = new Hashtable(iTweenParams);
+					iTween.MoveBy(maze.MazeCells[index,col],ht);
+					NetworkTransformChild[] ntcs = maze.MazeCells[index,col].GetComponents<NetworkTransformChild>();
+					foreach(NetworkTransformChild ntc in ntcs) {
+						iTween.MoveBy(ntc.target.gameObject,ht);
+					}
 				}
 				break;
 		}
@@ -184,10 +232,18 @@ public class InitiationMazeTransformer : MonoBehaviour
 		if (first != null)
 		{
 			// Move and destroy first
-			iTweenParams.Add(iT.MoveBy.oncomplete, "AfterCellsMoved");
-			iTweenParams.Add(iT.MoveBy.oncompletetarget, this.gameObject);
-			iTweenParams.Add(iT.MoveBy.oncompleteparams, first);
-			iTween.MoveBy(first, new Hashtable(iTweenParams));
+			
+			NetworkTransformChild[] ntcs = first.GetComponents<NetworkTransformChild>();
+			
+			foreach(NetworkTransformChild ntc in ntcs) {
+				iTween.MoveBy(ntc.target.gameObject,new Hashtable(iTweenParams));
+			}
+
+			iTweenParams.Add(iT.MoveBy.oncomplete,"AfterCellsMoved");
+			iTweenParams.Add(iT.MoveBy.oncompletetarget,this.gameObject);
+			iTweenParams.Add(iT.MoveBy.oncompleteparams,first);
+			
+			iTween.MoveBy(first,new Hashtable(iTweenParams));
 		}
 	}
 
