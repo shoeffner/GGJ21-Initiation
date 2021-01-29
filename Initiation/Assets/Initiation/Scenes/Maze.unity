@@ -1793,6 +1793,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
+      propertyPath: Rows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: Columns
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
       propertyPath: Algorithm
       value: 0
       objectReference: {fileID: 0}
@@ -1804,7 +1814,7 @@ PrefabInstance:
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: RandomSeed
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
