@@ -42,11 +42,6 @@ namespace Initiation
             }
         }
 
-        public void ReceiveDamage(float damage)
-        {
-            Debug.Log($"I'm hit! ({damage} damage)");
-        }
-
         void Start()
         {
             characterController.enabled = isLocalPlayer;
