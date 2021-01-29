@@ -3,8 +3,7 @@ using Mirror;
 
 namespace Initiation
 {
-    [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CharacterController))]    
     public class PlayerController : NetworkBehaviour
     {
         public CharacterController characterController;
@@ -24,7 +23,8 @@ namespace Initiation
         private Vector3 gravitySpeed = Vector3.zero;
 
         private Animator animator = null;
-        
+
+        const float SQRT_OF_2 = 1.41421356237f;
 
         void OnValidate()
         {
@@ -97,17 +97,8 @@ namespace Initiation
 
             characterController.Move((moveDirection * moveSpeed + gravitySpeed) * Time.deltaTime);
 
-            if (Mathf.Abs(inputHorizontal + inputVertical) < 0.001f)
-            {
-                animator.SetFloat("Forward", 0);
-                animator.SetFloat("Rightward", 0);
-            } 
-            else
-            {
-                Vector3 movement = Quaternion.AngleAxis(-Vector3.SignedAngle(moveDirection, transform.forward, Vector3.up), Vector3.up) * Vector3.forward;
-                animator.SetFloat("Forward", movement.z * forwardMovement.magnitude);
-                animator.SetFloat("Rightward", movement.x * rightMovement.magnitude);
-            }
+            float movementSpeed = Mathf.Sqrt(Mathf.Abs(inputHorizontal) + Mathf.Abs(inputVertical)) / SQRT_OF_2;
+            animator.SetFloat("MovementSpeed",movementSpeed);
         }
 
         void Rotate()
@@ -120,8 +111,8 @@ namespace Initiation
             {
                 Vector3 playerToMouse = floorHit.point - transform.position;
                 playerToMouse.y = 0f;
-                Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
-                GetComponent<Rigidbody>().MoveRotation(newRotatation);
+                Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
+                transform.rotation = newRotation;
             }
             
         }
