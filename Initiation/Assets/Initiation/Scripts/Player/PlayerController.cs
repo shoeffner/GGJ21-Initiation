@@ -24,45 +24,33 @@ namespace Initiation
 
         private Animator animator = null;
 
+        private CharacterStats characterStats;
+
         const float SQRT_OF_2 = 1.41421356237f;
 
-        void OnValidate()
+        public override void OnStartLocalPlayer()
         {
             if (characterController == null)
             {
                 characterController = GetComponent<CharacterController>();
             }
-            if (mainCamera == null)
-            {
-                mainCamera = Camera.main;
-            }
-            if (animator == null)
-            {
-                animator = GetComponentInChildren<Animator>();
-            }
-        }
-
-        void Start()
-        {
             characterController.enabled = isLocalPlayer;
+
             if (mainCamera == null)
             {
                 mainCamera = Camera.main;
             }
+            UpdateCamera();
+
             if (animator == null)
             {
                 animator = GetComponentInChildren<Animator>();
             }
-        }
 
-        public override void OnStartLocalPlayer()
-        {
-            UpdateCamera();
-        }
-
-        void OnDisable()
-        {
-
+            if (characterStats == null)
+            {
+                characterStats = GetComponent<CharacterStats>();
+            }
         }
 
         void UpdateCamera()
@@ -93,7 +81,7 @@ namespace Initiation
             characterController.Move((moveDirection * moveSpeed + gravitySpeed) * Time.deltaTime);
 
             float movementSpeed = Mathf.Sqrt(Mathf.Abs(inputHorizontal) + Mathf.Abs(inputVertical)) / SQRT_OF_2;
-            animator.SetFloat("MovementSpeed",movementSpeed);
+            animator.SetFloat("MovementSpeed", movementSpeed);
         }
 
         void Rotate()
@@ -118,13 +106,19 @@ namespace Initiation
             {
                 return;
             }
+            animator.SetBool("IsDead", characterStats.dead);
+            if (characterStats.dead)
+            {
+                return;
+            }
+
             Move();
             UpdateCamera();
         }
 
         void FixedUpdate()
         {
-            if (!isLocalPlayer || !characterController.enabled)
+            if (!isLocalPlayer || !characterController.enabled || characterStats.dead)
             {
                 return;
             }
