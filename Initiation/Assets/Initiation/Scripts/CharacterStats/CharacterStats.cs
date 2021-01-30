@@ -17,7 +17,7 @@ public class CharacterStats : NetworkBehaviour
     [SyncVar]
     public bool dead = false;
 
-    [Command]
+    [Command(ignoreAuthority=true)]
     public void CmdTakeDamage(int amount)
     {
         if (dead)
