@@ -300,8 +300,8 @@ MonoBehaviour:
   syncInterval: 0.1
   characterController: {fileID: 7216218384059027683}
   mainCamera: {fileID: 0}
-  cameraOffset: {x: 2, y: 4, z: -2}
-  cameraLookAtOffset: {x: 0, y: 2, z: 0}
+  cameraOffset: {x: 5.21, y: 9.96, z: -1.44}
+  cameraLookAtOffset: {x: 0, y: 2.35, z: 0}
   groundLayer: Ground
   moveSpeed: 7.5
   jumpHeight: 1.2
