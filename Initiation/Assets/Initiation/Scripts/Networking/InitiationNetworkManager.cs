@@ -31,6 +31,7 @@ namespace Initiation
         private List<AbilityManager.Ability> permanentAbilitiesPerPlayer;
         private List<PlayerController> players;
         private List<NetworkStartPosition> spawnPoints;
+        public List<RuneManager> runes;
 
         public override void OnStartServer()
         {
@@ -71,8 +72,12 @@ namespace Initiation
             gameobject.transform.position = spawnPoints[players.Count % spawnPoints.Count].transform.position;
             gameobject.transform.rotation = spawnPoints[players.Count % spawnPoints.Count].transform.rotation;
 
-            gameobject.GetComponent<AbilityManager>().permanentAbility = permanentAbilitiesPerPlayer[players.Count % permanentAbilitiesPerPlayer.Count];
-
+            AbilityManager am = gameobject.GetComponent<AbilityManager>();
+            am.permanentAbility = permanentAbilitiesPerPlayer[players.Count % permanentAbilitiesPerPlayer.Count];
+            foreach (RuneManager rm in runes)
+            {
+                rm.OnRuneActivation += am.RpcOnRuneActivation;
+            }
 
             players.Add(gameobject.GetComponent<PlayerController>());
             // call this to use this gameobject as the primary controller
@@ -81,7 +86,29 @@ namespace Initiation
 
         public override void OnServerDisconnect(NetworkConnection conn)
         {
-            // TODO: do something with conn.clientOwnedObjects to remove player form lists above etc.
+            PlayerController pc = null;
+            foreach (NetworkIdentity ni in conn.clientOwnedObjects)
+            {
+                pc = ni.gameObject.GetComponent<PlayerController>();
+                if (pc != null && players.Contains(pc))
+                {
+                    players.Remove(pc);
+                    break;
+                }
+            }
+            if (pc == null)
+            {
+                Debug.LogError("Could not unregister player properly.");
+                base.OnClientDisconnect(conn);
+                return;
+            }
+
+            AbilityManager am = pc.gameObject.GetComponent<AbilityManager>();
+            foreach (RuneManager rm in runes)
+            {
+                rm.OnRuneActivation -= am.RpcOnRuneActivation;
+            }
+
             base.OnClientDisconnect(conn);
         }
 

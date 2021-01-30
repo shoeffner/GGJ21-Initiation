@@ -86,4 +86,14 @@ public class AbilityManager : NetworkBehaviour
     {
         remainingCooldownFireball -= Time.deltaTime;
     }
+
+    [ClientRpc]
+    public void RpcOnRuneActivation(RuneManager runeManager)
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        Debug.Log("Rune!");
+    }
 }
