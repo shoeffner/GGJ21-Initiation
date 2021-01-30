@@ -320,6 +320,24 @@ MonoBehaviour:
   healthbar: {fileID: 5139802981598286114, guid: d69da4c5255f0bb4494ecbd84610f643,
     type: 3}
   heightAboveGround: 1.8
+--- !u!114 &5125271487456615635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341382351210672809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aaafb0451b65b549ae8d3318a0219b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  fireballPrefab: {fileID: 6575486745968736608, guid: 5f595d1bcc0cb95468528c6f525cf565,
+    type: 3}
+  cooldownFireball: 2
+  permanentAbility: 0
 --- !u!1 &6219989813484767028
 GameObject:
   m_ObjectHideFlags: 0

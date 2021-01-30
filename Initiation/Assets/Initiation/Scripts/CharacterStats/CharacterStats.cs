@@ -11,7 +11,7 @@ public class CharacterStats : NetworkBehaviour
     public bool dead = false;
 
     [Command]
-    public void TakeDamage(int amount)
+    public void CmdTakeDamage(int amount)
     {
         if (dead)
         {
@@ -27,7 +27,7 @@ public class CharacterStats : NetworkBehaviour
     }
 
     [Command]
-    public void Heal(int amount)
+    public void CmdHeal(int amount)
     {
         if (dead)
         {

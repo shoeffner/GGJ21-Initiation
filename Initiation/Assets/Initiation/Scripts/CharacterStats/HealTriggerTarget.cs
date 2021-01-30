@@ -12,7 +12,7 @@ public class HealTriggerTarget : NetworkBehaviour
         CharacterStats characterStats = collider.gameObject.GetComponent<CharacterStats>();
         if (characterStats != null)
         {
-            characterStats.Heal(health);
+            characterStats.CmdHeal(health);
         }
     }
 }

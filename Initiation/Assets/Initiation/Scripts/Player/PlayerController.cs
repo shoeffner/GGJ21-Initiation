@@ -112,6 +112,21 @@ namespace Initiation
                 return;
             }
 
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                GetComponent<AbilityManager>().CmdLoseAbility();
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                GetComponent<AbilityManager>().CmdLearnAllAbilities();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GetComponent<AbilityManager>().CmdCastFireball();
+            }
+
             Move();
             UpdateCamera();
         }

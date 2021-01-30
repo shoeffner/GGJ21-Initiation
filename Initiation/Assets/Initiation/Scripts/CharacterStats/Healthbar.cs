@@ -47,7 +47,7 @@ public class Healthbar : MonoBehaviour
     {
         if (m_healthbar != null)
         {
-            UpdateRectTransform();
+            // UpdateRectTransform();
             m_healthbar.transform.LookAt(Camera.main.transform);
         }
         if (slider != null)
