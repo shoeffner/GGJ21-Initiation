@@ -13,12 +13,8 @@ public class AbilityManager : NetworkBehaviour
     public GameObject fireballPrefab;
     public Transform shootAnchor;
 
-
     [Range(0, 5)] 
     public float cooldownFireball = 2.0f;
-
-    [Range(0,5)]
-    public float fireballVelocity = 25.0f;
 
     [SyncVar]
     private float remainingCooldownFireball = 0;
@@ -47,9 +43,7 @@ public class AbilityManager : NetworkBehaviour
         }
         remainingCooldownFireball = cooldownFireball;
         GameObject fireball = Instantiate(fireballPrefab);
-        fireball.transform.position = shootAnchor.position;
-        fireball.transform.rotation = shootAnchor.rotation;
-        fireball.GetComponent<Rigidbody>().velocity = shootAnchor.forward * fireballVelocity;
+        fireball.GetComponent<Fireball>().CastBy(gameObject);
         NetworkServer.Spawn(fireball);
     }
 
@@ -61,7 +55,7 @@ public class AbilityManager : NetworkBehaviour
             Debug.Log("Healing unavailable");
             return;
         }
-        target.CmdHeal(amount);
+        target.Heal(amount);
     }
 
     [Command]

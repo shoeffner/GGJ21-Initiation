@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(CharacterStats))]
 public class Healthbar : MonoBehaviour
 {
     public GameObject healthbar;
@@ -47,7 +46,6 @@ public class Healthbar : MonoBehaviour
     {
         if (m_healthbar != null)
         {
-            // UpdateRectTransform();
             m_healthbar.transform.LookAt(Camera.main.transform);
         }
         if (slider != null)

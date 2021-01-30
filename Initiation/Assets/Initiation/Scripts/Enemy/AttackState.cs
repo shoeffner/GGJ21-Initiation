@@ -35,7 +35,7 @@ namespace Initiation {
 				RaycastHit hit;
 				if(Physics.Raycast(ray,out hit, enemy.attackRange, enemy.mask)) {
 					Debug.Log(hit.transform.name);
-					enemy.target.CmdTakeDamage(enemy.attackDamage);
+					enemy.target.TakeDamage(enemy.attackDamage);
 				}
 			}
 			
