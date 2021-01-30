@@ -94,7 +94,11 @@ namespace Initiation
             }
 
             players.Add(gameobject.GetComponent<PlayerController>());
-            ritualTrigger.playersRequiredForRitual = players.Count;
+            if (ritualTrigger != null)
+            {
+                ritualTrigger.playersRequiredForRitual = players.Count;
+            }
+
             // call this to use this gameobject as the primary controller
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }
