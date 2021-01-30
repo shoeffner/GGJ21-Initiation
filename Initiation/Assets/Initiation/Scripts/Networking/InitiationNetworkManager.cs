@@ -48,11 +48,18 @@ namespace Initiation
             players = new List<PlayerController>();
             Debug.Log("Generated player list");
             spawnPoints = new List<NetworkStartPosition>(FindObjectsOfType<NetworkStartPosition>());
-            foreach (RuneManager rm in runes)
+            if (ritualTrigger != null)
             {
-                rm.OnRuneActivation += ritualTrigger.OnRuneActivation;
+                Debug.LogWarning("No ritual trigger set yet!");
             }
-            ritualTrigger.requiredRunes = runes.Count;
+            else
+            {
+                foreach (RuneManager rm in runes)
+                {
+                    rm.OnRuneActivation += ritualTrigger.OnRuneActivation;
+                }
+                ritualTrigger.requiredRunes = runes.Count;
+            }
         }
 
         public override void OnClientConnect(NetworkConnection conn)
