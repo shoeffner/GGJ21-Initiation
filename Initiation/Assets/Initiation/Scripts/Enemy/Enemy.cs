@@ -22,7 +22,6 @@ namespace Initiation {
 
 		public Transform attackOrigin;
 
-		
 		public float senseRadius = 10;
 		public float attackRange = 1;
 		public float attackSpeed = 1;
@@ -30,14 +29,14 @@ namespace Initiation {
 
 		public CharacterStats target; // { get; private set; }
 
+		bool isDying;
 
-
-		private void OnTriggerEnter(Collider other)
-		{
-			if(other.CompareTag("Player")) {
-				SetTarget(other.GetComponent<CharacterStats>());
-			}
-		}
+		//private void OnTriggerEnter(Collider other)
+		//{
+		//	if(other.CompareTag("Player")) {
+		//		SetTarget(other.GetComponent<CharacterStats>());
+		//	}
+		//}
 
 
 		public void SetTarget(CharacterStats target)
@@ -70,9 +69,21 @@ namespace Initiation {
 
 		}
 
+		IEnumerator AsyncDie() {
+			yield return new WaitForSeconds(2);
+			Destroy(gameObject,2);
+			NetworkServer.Destroy(gameObject);
+		}
+
 		private void Stats_OnDie(CharacterStats obj)
 		{
 			animator.SetBool("IsDead", true);
+			if(!isDying) {
+				isDying = true;
+				StartCoroutine(AsyncDie());
+			}
+			
+			
 		}
 
 		private void Stats_OnTakeDammage(CharacterStats obj)

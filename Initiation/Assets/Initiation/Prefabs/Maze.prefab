@@ -65,12 +65,13 @@ MonoBehaviour:
   - {fileID: 7779381877309823848, guid: 3147d36c2dbec409a9d2d2b60bf2afc7, type: 3}
   Pillar:
   - {fileID: 3713104444964819695, guid: b083a625e44aa4d2c8f21f74f80a27b9, type: 3}
+  Goals:
+  - {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705, type: 3}
   Rows: 8
   Columns: 8
   CellWidth: 4
   CellHeight: 4
   AddGaps: 0
-  GoalPrefab: {fileID: 159624, guid: 850205124263c924ea0aa82f0fdf2673, type: 3}
   OuterWalls: {fileID: 845582713216868192}
   OuterWallsNorth: {fileID: 2632206720308648393}
   OuterWallsSouth: {fileID: 8077542206850153976}

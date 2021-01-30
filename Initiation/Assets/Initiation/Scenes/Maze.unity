@@ -560,33 +560,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2736035461411005005, guid: 55776efecb0cd134ea5f418c2f97a705,
         type: 3}
-      propertyPath: attackRange
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2736035461411005005, guid: 55776efecb0cd134ea5f418c2f97a705,
-        type: 3}
-      propertyPath: mask.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2736035461411005005, guid: 55776efecb0cd134ea5f418c2f97a705,
-        type: 3}
-      propertyPath: senseRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2736035461411005005, guid: 55776efecb0cd134ea5f418c2f97a705,
-        type: 3}
       propertyPath: rotationSpeed
       value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 5208197273073854891, guid: 55776efecb0cd134ea5f418c2f97a705,
-        type: 3}
-      propertyPath: m_Radius
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9080134380442741218, guid: 55776efecb0cd134ea5f418c2f97a705,
         type: 3}
       propertyPath: m_Speed
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55776efecb0cd134ea5f418c2f97a705, type: 3}
@@ -1822,36 +1802,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
-        type: 3}
-      propertyPath: spawnPrefabs.Array.data[11]
-      value: 
-      objectReference: {fileID: 2761557732807745667, guid: c7e9686d9b88b65449cd535c13980140,
-        type: 3}
-    - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
-        type: 3}
-      propertyPath: spawnPrefabs.Array.data[12]
-      value: 
-      objectReference: {fileID: 5379436118354633376, guid: 821559b30e623e5499fce2dab602d441,
-        type: 3}
-    - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
-        type: 3}
-      propertyPath: spawnPrefabs.Array.data[13]
-      value: 
-      objectReference: {fileID: 3693037952918835225, guid: 4e03c6be96f049f46a917a5bf2ee75e6,
-        type: 3}
-    - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
-        type: 3}
-      propertyPath: spawnPrefabs.Array.data[14]
-      value: 
-      objectReference: {fileID: 1230081741081257095, guid: a9b6ea3ea19625344b6ff5d4ec1a44e0,
-        type: 3}
-    - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
-        type: 3}
-      propertyPath: spawnPrefabs.Array.data[15]
-      value: 
-      objectReference: {fileID: 4562118550202613332, guid: bb773942373e4434bb7c25004d4ee714,
-        type: 3}
     - target: {fileID: 1046970477998454357, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: m_RootOrder
@@ -2245,6 +2195,11 @@ PrefabInstance:
       objectReference: {fileID: 1939585207}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
+      propertyPath: Goals.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
       propertyPath: CreateGapInEastWall
       value: -1
       objectReference: {fileID: 0}
@@ -2253,6 +2208,12 @@ PrefabInstance:
       propertyPath: CreateGapInWestWall
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: Goals.Array.data[0]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: CreateGapInNorthWall

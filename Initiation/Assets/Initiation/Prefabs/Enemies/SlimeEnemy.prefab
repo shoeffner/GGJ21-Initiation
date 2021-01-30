@@ -388,11 +388,10 @@ GameObject:
   - component: {fileID: 2736035461411005005}
   - component: {fileID: 5233306117044976483}
   - component: {fileID: 9080134380442741218}
-  - component: {fileID: 5208197273073854891}
   - component: {fileID: 7162468954109300583}
   m_Layer: 0
   m_Name: SlimePBR
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -499,10 +498,10 @@ MonoBehaviour:
   syncInterval: 0.1
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   attackOrigin: {fileID: 315122430725156166}
-  senseRadius: 10
-  attackRange: 1
+  senseRadius: 4
+  attackRange: 2
   attackSpeed: 0.5
   attackDamage: 2
   target: {fileID: 0}
@@ -543,19 +542,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &5208197273073854891
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919012471076396}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!136 &7162468954109300583
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -162,13 +162,12 @@ public class InitiationMazeSpawner : NetworkBehaviour
 					NetworkServer.Spawn(tmp);
 
 				}
-				//if(cell.IsGoal) {
-				//	int goalIdx = Random.Range(0,Goals.Count - 1);
-				//	tmp = Instantiate(Goals[goalIdx],new Vector3(x,y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
-					
-				//	floor.AddComponent<NetworkTransformChild>().target = tmp.transform;
-				//	NetworkServer.Spawn(tmp);
-				//}
+				if(cell.IsGoal) {
+					int goalIdx = Random.Range(0,Goals.Count - 1);
+					tmp = Instantiate(Goals[goalIdx],new Vector3(x,y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
+					//floor.AddComponent<NetworkTransformChild>().target = tmp.transform;
+					NetworkServer.Spawn(tmp);
+				}
 				MazeCells[row, column] = floor;
 			}
 		}
