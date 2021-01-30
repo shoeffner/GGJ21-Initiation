@@ -7,11 +7,33 @@ namespace Initiation {
 
     public class InitiationMazeTrap:MonoBehaviour {
 
+        public Sprite[] sprites;
+
+        public SpriteRenderer directionSprite;
+
         public Vector2Int cellId;
         public InitiationMazeTransformer.MoveDirection direction;
         public InitiationMazeSpawner maze;
         public InitiationMazeTransformer transformer;
         public bool isActivated = true;
+
+
+
+        public void InitTrap(Vector2Int cellId,
+			InitiationMazeTransformer.MoveDirection direction,
+			InitiationMazeSpawner maze,
+            InitiationMazeTransformer transformer,
+            bool isActivated) {
+            this.cellId = cellId;
+            this.direction = direction;
+            this.maze = maze;
+            this.transformer = transformer;
+            this.isActivated = isActivated;
+
+
+            directionSprite.sprite = sprites[(int)direction];
+
+        }
 
 
         void OnTriggerEnter(Collider other)
@@ -24,6 +46,7 @@ namespace Initiation {
                     id = cellId.y;
                 }
                 transformer.AlterMaze(direction,id);
+                directionSprite.sprite = sprites[(int)direction];
             }
         }
     }

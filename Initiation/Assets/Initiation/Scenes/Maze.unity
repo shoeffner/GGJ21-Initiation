@@ -258,6 +258,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}
 --- !u!1001 &45612408
@@ -397,6 +408,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}
 --- !u!1 &48167734
@@ -579,6 +601,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 235979809}
+  - component: {fileID: 235979810}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -611,6 +634,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &235979810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235979808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798d38b13f59b4ad9a63d83f209e0236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagToKill: Enemy
 --- !u!4 &270130254 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9092517761460460021, guid: c52c69648212c49de89603494bbae60b,
@@ -754,6 +790,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}
 --- !u!1001 &365432933
@@ -816,7 +863,7 @@ PrefabInstance:
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: CreateGapInEastWall
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
@@ -888,6 +935,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}
 --- !u!1 &413026395
@@ -943,7 +1001,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413026395}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1120,6 +1178,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}
 --- !u!1 &511668070
@@ -1270,12 +1339,12 @@ PrefabInstance:
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: CreateGapInEastWall
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: CreateGapInWestWall
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
@@ -1342,6 +1411,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}
 --- !u!1001 &652869921
@@ -1424,7 +1504,7 @@ PrefabInstance:
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: CreateGapInSouthWall
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460021, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
@@ -1481,6 +1561,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}
 --- !u!4 &667148330 stripped
@@ -2206,7 +2297,7 @@ PrefabInstance:
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: CreateGapInWestWall
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
@@ -2217,7 +2308,7 @@ PrefabInstance:
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
       propertyPath: CreateGapInNorthWall
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9092517761460460020, guid: c52c69648212c49de89603494bbae60b,
         type: 3}
@@ -2285,5 +2376,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092517761460460022, guid: c52c69648212c49de89603494bbae60b,
+        type: 3}
+      propertyPath: mazeComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c69648212c49de89603494bbae60b, type: 3}

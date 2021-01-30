@@ -100,9 +100,8 @@ namespace Initiation {
 					floor.name = Floor[floorIdx].name;
 					InitiationMazeTrap trap = floor.GetComponent<InitiationMazeTrap>();
 					if(trap != null) {
-						trap.maze = this;
-						trap.transformer = this.GetComponent<InitiationMazeTransformer>();
-						trap.cellId = new Vector2Int(column, row);
+						InitiationMazeTransformer.MoveDirection dir = (InitiationMazeTransformer.MoveDirection)Random.Range(0,3);
+						trap.InitTrap(new Vector2Int(column,row),dir,this, GetComponent<InitiationMazeTransformer>(), true);
 					}
 	
 				//tnc.target = floor.transform;
@@ -168,13 +167,13 @@ namespace Initiation {
 						NetworkServer.Spawn(tmp);
 
 					}
-					if(cell.IsGoal) {
-						int goalIdx = Random.Range(0,Goals.Count - 1);
-						tmp = Instantiate(Goals[goalIdx],new Vector3(x,y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
-						tmp.name = Goals[goalIdx].name;
-						//floor.AddComponent<NetworkTransformChild>().target = tmp.transform;
-						NetworkServer.Spawn(tmp);
-					}
+					//if(cell.IsGoal) {
+					//	int goalIdx = Random.Range(0,Goals.Count - 1);
+					//	tmp = Instantiate(Goals[goalIdx],new Vector3(x,y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
+					//	tmp.name = Goals[goalIdx].name;
+					//	//floor.AddComponent<NetworkTransformChild>().target = tmp.transform;
+					//	NetworkServer.Spawn(tmp);
+					//}
 					MazeCells[row,column] = floor;
 				}
 			}

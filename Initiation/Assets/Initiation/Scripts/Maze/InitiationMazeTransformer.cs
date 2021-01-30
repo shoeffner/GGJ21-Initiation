@@ -68,12 +68,22 @@ namespace Initiation {
 			GameObject newCell = Instantiate(mazeComponentsDict[cell.name]);
 			newCell.transform.position = pos;
 			newCell.name = cell.name;
+
+			InitiationMazeTrap trap = cell.GetComponent<InitiationMazeTrap>();
+			if(trap != null) {
+				newCell.GetComponent<InitiationMazeTrap>().InitTrap(trap.cellId,trap.direction,trap.maze,trap.transformer,trap.isActivated);
+			}
+
+
 			NetworkServer.Spawn(newCell);
 			NetworkTransformChild[] ntcs = cell.GetComponents<NetworkTransformChild>();
 			foreach(NetworkTransformChild ntc in ntcs) {
 				GameObject child = Instantiate(mazeComponentsDict[ntc.target.name]);
 				child.GetComponent<InitiationMazeWall>()?.InitWall(ntc.target.GetComponent<InitiationMazeWall>().direction,
 					maze.CellWidth,maze.CellHeight,Vector3.zero,pos.x,pos.y,pos.z);
+
+				
+
 				//child.transform.position = ntc.target.position;
 				//child.transform.rotation = ntc.target.rotation;			
 				child.name = ntc.target.name;
