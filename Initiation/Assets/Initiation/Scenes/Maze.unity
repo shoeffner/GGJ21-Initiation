@@ -1763,7 +1763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &645888963
 Transform:
   m_ObjectHideFlags: 0
@@ -2248,7 +2248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1458014766
 Transform:
   m_ObjectHideFlags: 0
@@ -2323,21 +2323,6 @@ PrefabInstance:
     - target: {fileID: 2761557732807745668, guid: c7e9686d9b88b65449cd535c13980140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2761557732807745668, guid: c7e9686d9b88b65449cd535c13980140,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2761557732807745668, guid: c7e9686d9b88b65449cd535c13980140,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2761557732807745668, guid: c7e9686d9b88b65449cd535c13980140,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2524,37 +2509,37 @@ PrefabInstance:
         type: 3}
       propertyPath: ritualTrigger
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 645888964}
     - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: runes.Array.size
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: runes.Array.data[0]
       value: 
-      objectReference: {fileID: 1439506162}
+      objectReference: {fileID: 851107599}
     - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: runes.Array.data[1]
       value: 
-      objectReference: {fileID: 851107599}
+      objectReference: {fileID: 1050991401}
     - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: runes.Array.data[2]
       value: 
-      objectReference: {fileID: 1050991401}
+      objectReference: {fileID: 1159255287}
     - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: runes.Array.data[3]
       value: 
-      objectReference: {fileID: 1159255287}
+      objectReference: {fileID: 917740393}
     - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: runes.Array.data[4]
       value: 
-      objectReference: {fileID: 917740393}
+      objectReference: {fileID: 1439506162}
     - target: {fileID: 1046970477998454356, guid: bb22af77930156242932b5f8090204f4,
         type: 3}
       propertyPath: spawnPrefabs.Array.size
