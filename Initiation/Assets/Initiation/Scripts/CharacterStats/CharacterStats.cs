@@ -4,7 +4,7 @@ using System;
 
 public class CharacterStats : NetworkBehaviour
 {
-    public event Action<CharacterStats> OnTakeDammage;
+    public event Action<CharacterStats> OnTakeDamage;
     public event Action<CharacterStats> OnHeal;
     public event Action<CharacterStats> OnDie;
 
@@ -30,7 +30,7 @@ public class CharacterStats : NetworkBehaviour
         }
 
         health -= amount;
-        OnTakeDammage?.Invoke(this);
+        OnTakeDamage?.Invoke(this);
         if (health <= 0)
         {
             health = 0;
