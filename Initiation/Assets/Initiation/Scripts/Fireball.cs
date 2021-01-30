@@ -10,17 +10,26 @@ public class Fireball : NetworkBehaviour
     public float fireballVelocity = 25.0f;
 
     private DestroyOnCollision doc;
-    
+
+    public Collider triggerCollider;
+
+
     public void CastBy(GameObject character)
     {
         if (doc == null)
         {
             doc = gameObject.GetComponent<DestroyOnCollision>();
-        }   
+        }
+
+        Physics.IgnoreCollision(triggerCollider,character.GetComponent<Collider>(),true);
+
         doc.ignoredGameObjects.Add(character);
         AbilityManager am = character.GetComponent<AbilityManager>();
         transform.position = am.shootAnchor.position;
         transform.rotation = am.shootAnchor.rotation;
         GetComponent<Rigidbody>().velocity = am.shootAnchor.forward * fireballVelocity;
     }
+
+	
+
 }

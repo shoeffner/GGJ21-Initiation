@@ -200,9 +200,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  ignoredTags:
-  - Ground
-  ignoredGameObjects: []
 --- !u!114 &6407921159858394724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8dc586456f0dd74b847bad4f2698e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   fireballVelocity: 25
+  triggerCollider: {fileID: 8870586447590038846}
 --- !u!135 &-1325151842238883697
 SphereCollider:
   m_ObjectHideFlags: 0
