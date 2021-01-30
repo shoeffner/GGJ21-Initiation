@@ -22,12 +22,13 @@ public class InitiationMazeSpawner : NetworkBehaviour
 	public List<GameObject> Floor;
 	public List<GameObject> Wall;
 	public List<GameObject> Pillar;
+	public List<GameObject> Goals;
 	public int Rows = 8;
 	public int Columns = 8;
 	public float CellWidth = 4;
 	public float CellHeight = 4;
 	public bool AddGaps = false;
-	public GameObject GoalPrefab = null;
+	
 
 	
 
@@ -161,9 +162,11 @@ public class InitiationMazeSpawner : NetworkBehaviour
 					NetworkServer.Spawn(tmp);
 
 				}
-				//if(cell.IsGoal && GoalPrefab != null) {
-				//	tmp = Instantiate(GoalPrefab,new Vector3(x, y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
-				//	tmp.transform.parent = floor.transform;
+				//if(cell.IsGoal) {
+				//	int goalIdx = Random.Range(0,Goals.Count - 1);
+				//	tmp = Instantiate(Goals[goalIdx],new Vector3(x,y + 1,z),Quaternion.Euler(0,0,0)) as GameObject;
+					
+				//	floor.AddComponent<NetworkTransformChild>().target = tmp.transform;
 				//	NetworkServer.Spawn(tmp);
 				//}
 				MazeCells[row, column] = floor;
