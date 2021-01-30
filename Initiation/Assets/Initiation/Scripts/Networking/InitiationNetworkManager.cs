@@ -30,6 +30,7 @@ namespace Initiation
     {
         private List<AbilityManager.Ability> permanentAbilitiesPerPlayer;
         private List<PlayerController> players;
+        private List<NetworkStartPosition> spawnPoints;
 
         public override void OnStartServer()
         {
@@ -44,6 +45,7 @@ namespace Initiation
             Debug.Log("Shuffled abilities");
             players = new List<PlayerController>();
             Debug.Log("Generated player list");
+            spawnPoints = new List<NetworkStartPosition>(FindObjectsOfType<NetworkStartPosition>());
         }
 
         public override void OnClientConnect(NetworkConnection conn)
@@ -61,14 +63,18 @@ namespace Initiation
             // playerPrefab is the one assigned in the inspector in Network
             // Manager but you can use different prefabs per race for example
             GameObject gameobject = Instantiate(playerPrefab);
-            players.Add(gameobject.GetComponent<PlayerController>());
 
             // Apply data from the message however appropriate for your game
             // Typically Player would be a component you write with syncvars or properties
-            Debug.Log(permanentAbilitiesPerPlayer[players.Count % permanentAbilitiesPerPlayer.Count]);
-            gameobject.GetComponent<AbilityManager>().permanentAbility = permanentAbilitiesPerPlayer[players.Count % permanentAbilitiesPerPlayer.Count];
-            Debug.Log(gameobject.GetComponent<AbilityManager>().permanentAbility);
+            
+            // Apply spawn position (always round robin though)
+            gameobject.transform.position = spawnPoints[players.Count % spawnPoints.Count].transform.position;
+            gameobject.transform.rotation = spawnPoints[players.Count % spawnPoints.Count].transform.rotation;
 
+            gameobject.GetComponent<AbilityManager>().permanentAbility = permanentAbilitiesPerPlayer[players.Count % permanentAbilitiesPerPlayer.Count];
+
+
+            players.Add(gameobject.GetComponent<PlayerController>());
             // call this to use this gameobject as the primary controller
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }
