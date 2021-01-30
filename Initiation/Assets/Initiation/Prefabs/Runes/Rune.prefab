@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 2761557732807745670}
   - component: {fileID: 2761557732807745669}
   - component: {fileID: -3054546917795421607}
+  - component: {fileID: 1741129037}
+  - component: {fileID: 1741129038}
+  - component: {fileID: 1741129036}
   m_Layer: 0
   m_Name: Rune
   m_TagString: Untagged
@@ -97,6 +100,48 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!136 &1741129037
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761557732807745667}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.2216079
+  m_Height: 6.1125517
+  m_Direction: 1
+  m_Center: {x: -0.09811282, y: 1.6413414, z: 0.037131906}
+--- !u!136 &1741129038
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761557732807745667}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 2.42
+  m_Height: 8.96
+  m_Direction: 1
+  m_Center: {x: -0.09811282, y: 1.6413414, z: 0.037131906}
+--- !u!114 &1741129036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761557732807745667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3578ddcae145e0442a45f813023c2c0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &2761557733073408663
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +180,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2761557733073408663}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0

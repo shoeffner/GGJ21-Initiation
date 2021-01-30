@@ -481,6 +481,11 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3432833628
       objectReference: {fileID: 0}
+    - target: {fileID: -3054546917795421607, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_AssetId
+      value: c7e9686d9b88b65449cd535c13980140
+      objectReference: {fileID: 0}
     - target: {fileID: 2761557732807745667, guid: c7e9686d9b88b65449cd535c13980140,
         type: 3}
       propertyPath: m_Name
@@ -541,61 +546,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2761557733073408665, guid: c7e9686d9b88b65449cd535c13980140,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e9686d9b88b65449cd535c13980140, type: 3}
---- !u!1 &1741129035 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2761557732807745667, guid: c7e9686d9b88b65449cd535c13980140,
+--- !u!114 &1741129036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1741129036, guid: c7e9686d9b88b65449cd535c13980140,
     type: 3}
   m_PrefabInstance: {fileID: 1741129034}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1741129036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741129035}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3578ddcae145e0442a45f813023c2c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!136 &1741129037
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741129035}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 1.2216079
-  m_Height: 6.1125517
-  m_Direction: 1
-  m_Center: {x: -0.09811282, y: 1.6413414, z: 0.037131906}
---- !u!136 &1741129038
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741129035}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 2.42
-  m_Height: 8.96
-  m_Direction: 1
-  m_Center: {x: -0.09811282, y: 1.6413414, z: 0.037131906}
 --- !u!1 &2121363909
 GameObject:
   m_ObjectHideFlags: 0
