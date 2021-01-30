@@ -12,10 +12,11 @@ public class Fireball : NetworkBehaviour
     private DestroyOnCollision doc;
 
     public Collider triggerCollider;
-
+    public CharacterStats caster;
 
     public void CastBy(GameObject character)
     {
+        caster = character.GetComponent<CharacterStats>();
         if (doc == null)
         {
             doc = gameObject.GetComponent<DestroyOnCollision>();
