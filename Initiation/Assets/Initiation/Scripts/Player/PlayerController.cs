@@ -3,10 +3,11 @@ using Mirror;
 
 namespace Initiation
 {
-    [RequireComponent(typeof(CharacterController))]    
+    //[RequireComponent(typeof(CharacterController))]    
     public class PlayerController : NetworkBehaviour
     {
-        public CharacterController characterController;
+        //public CharacterController characterController;
+        public Rigidbody rb;
 
         public Camera mainCamera;
         public Vector3 cameraOffset = new Vector3(2, 4, -2);
@@ -14,13 +15,13 @@ namespace Initiation
 
         public string groundLayer = "Ground";
 
-        public float moveSpeed = 7.5f;
+        public float moveSpeed = 16f;
         public float jumpHeight = 1.2f;
 
         private Vector3 forward = Vector3.forward;
         private Vector3 right = Vector3.right;
+        private Vector3 moveForce = Vector3.zero;
 
-        private Vector3 gravitySpeed = Vector3.zero;
 
         private Animator animator = null;
 
@@ -30,11 +31,10 @@ namespace Initiation
 
         public override void OnStartLocalPlayer()
         {
-            if (characterController == null)
+            if (rb == null)
             {
-                characterController = GetComponent<CharacterController>();
+                rb = GetComponent<Rigidbody>();
             }
-            characterController.enabled = isLocalPlayer;
 
             if (mainCamera == null)
             {
@@ -63,25 +63,8 @@ namespace Initiation
 
         void Move()
         {
-            float inputHorizontal = Input.GetAxis("Horizontal");
-            float inputVertical = Input.GetAxis("Vertical");
-            Vector3 forwardMovement = forward * inputVertical;
-            Vector3 rightMovement = right * inputHorizontal;
-            Vector3 moveDirection = (forwardMovement + rightMovement).normalized;
-
-            if (characterController.isGrounded)
-            {
-                gravitySpeed = Vector3.zero;
-            }
-            else
-            {
-                gravitySpeed += Physics.gravity * Time.deltaTime;
-            }
-
-            characterController.Move((moveDirection * moveSpeed + gravitySpeed) * Time.deltaTime);
-
-            float movementSpeed = Mathf.Sqrt(Mathf.Abs(inputHorizontal) + Mathf.Abs(inputVertical)) / SQRT_OF_2;
-            animator.SetFloat("MovementSpeed", movementSpeed);
+            rb.velocity = moveForce;
+            animator.SetFloat("MovementSpeed",rb.velocity.sqrMagnitude);
         }
 
         void Rotate()
@@ -102,7 +85,7 @@ namespace Initiation
 
         void Update()
         {
-            if (!isLocalPlayer || !characterController.enabled)
+            if (!isLocalPlayer)
             {
                 return;
             }
@@ -111,6 +94,14 @@ namespace Initiation
             {
                 return;
             }
+
+
+            float inputHorizontal = Input.GetAxis("Horizontal");
+            float inputVertical = Input.GetAxis("Vertical");
+            Vector3 forwardMovement = forward * inputVertical;
+            Vector3 rightMovement = right * inputHorizontal;
+            moveForce = (forwardMovement + rightMovement).normalized * moveSpeed;
+
 
             if (Input.GetKeyDown(KeyCode.L))
             {
@@ -126,17 +117,23 @@ namespace Initiation
             {
                 GetComponent<AbilityManager>().CmdCastFireball();
             }
+        }
 
-            Move();
+		private void LateUpdate()
+		{
+            if(!isLocalPlayer) {
+                return;
+            }
             UpdateCamera();
         }
 
-        void FixedUpdate()
+		void FixedUpdate()
         {
-            if (!isLocalPlayer || !characterController.enabled || characterStats.dead)
+            if (!isLocalPlayer  || characterStats.dead)
             {
                 return;
             }
+            Move();
             Rotate();
         }
     }
