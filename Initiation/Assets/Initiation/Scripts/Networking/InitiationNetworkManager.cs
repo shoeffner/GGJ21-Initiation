@@ -48,7 +48,7 @@ namespace Initiation
             players = new List<PlayerController>();
             Debug.Log("Generated player list");
             spawnPoints = new List<NetworkStartPosition>(FindObjectsOfType<NetworkStartPosition>());
-            if (ritualTrigger != null)
+            if (ritualTrigger == null)
             {
                 Debug.LogWarning("No ritual trigger set yet!");
             }
