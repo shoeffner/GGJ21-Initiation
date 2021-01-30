@@ -13,7 +13,7 @@ public class DamageTriggerTarget : NetworkBehaviour
         CharacterStats characterStats = collider.gameObject.GetComponent<CharacterStats>();
         if (characterStats != null)
         {
-            characterStats.CmdTakeDamage(damage);
+            characterStats.TakeDamage(damage);
         }
     }
 }

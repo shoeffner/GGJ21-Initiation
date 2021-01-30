@@ -8,7 +8,7 @@ public class CharacterStats : NetworkBehaviour
     public event Action<CharacterStats> OnHeal;
     public event Action<CharacterStats> OnDie;
 
-
+    [SyncVar]
     public int maxHealth = 10;
 
     [SyncVar]
@@ -17,8 +17,12 @@ public class CharacterStats : NetworkBehaviour
     [SyncVar]
     public bool dead = false;
 
-    [Command(ignoreAuthority=true)]
-    public void CmdTakeDamage(int amount)
+    public void Awake()
+    {
+        health = Math.Min(health, maxHealth);
+    }
+
+    public void TakeDamage(int amount)
     {
         if (dead)
         {
@@ -35,8 +39,7 @@ public class CharacterStats : NetworkBehaviour
         }
     }
 
-    [Command]
-    public void CmdHeal(int amount)
+    public void Heal(int amount)
     {
         if (dead)
         {
@@ -50,10 +53,4 @@ public class CharacterStats : NetworkBehaviour
         }
         OnHeal?.Invoke(this);
     }
-
-	//private void OnTriggerEnter(Collider other)
-	//{
- //       print($"CharacterStats {name} OnTriggerEnter");
-	//}
-
 }
