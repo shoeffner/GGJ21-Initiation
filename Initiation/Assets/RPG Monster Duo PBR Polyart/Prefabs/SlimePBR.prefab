@@ -383,8 +383,9 @@ GameObject:
   - component: {fileID: 95161444847813696}
   - component: {fileID: 2612006869782465464}
   - component: {fileID: 3945094407276731269}
-  - component: {fileID: 2736035461411005005}
   - component: {fileID: 8810150042302752740}
+  - component: {fileID: 2736035461411005005}
+  - component: {fileID: 5233306117044976483}
   - component: {fileID: 9080134380442741218}
   - component: {fileID: 5208197273073854891}
   m_Layer: 0
@@ -463,23 +464,6 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
---- !u!114 &2736035461411005005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919012471076396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e89b5fe8bdb4326b4360544ac5ec3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  state: 0
-  senseRadius: 10
-  attackRange: 1
 --- !u!114 &8810150042302752740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +481,38 @@ MonoBehaviour:
   maxHealth: 5
   health: 5
   dead: 0
+--- !u!114 &2736035461411005005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919012471076396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e89b5fe8bdb4326b4360544ac5ec3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  state: 0
+  senseRadius: 10
+  attackRange: 1
+--- !u!114 &5233306117044976483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919012471076396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4c63204bc544c60b7bdf6618c2cae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  CurrentStateName: 
 --- !u!195 &9080134380442741218
 NavMeshAgent:
   m_ObjectHideFlags: 0

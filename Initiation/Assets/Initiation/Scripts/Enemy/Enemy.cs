@@ -12,87 +12,77 @@ namespace Initiation {
     
     public class Enemy:NetworkBehaviour {
 
-  //      public enum EnemyState {
-		//	Idle,
-		//	Chase,
-		//	Attack
-		//}
-		//public EnemyState state;
+
+		public LayerMask mask;
+		StateMachine stateMachine;
+
+		public NavMeshAgent navMeshAgent { get; private set; }
+		public CharacterStats stats { get; private set; }
+		public Animator animator { get; private set; }
+		
+
+		
+		public float senseRadius = 10;
+		public float attackRange = 1;
+		public float attackSpeed = 1;
+
+		public CharacterStats target; // { get; private set; }
 
 
-		//NavMeshAgent navMeshAgent;
-  //      CharacterStats stats;
-  //      Animator animator;
 
+		private void OnTriggerEnter(Collider other)
+		{
+			if(other.CompareTag("Player")) {
+				SetTarget(other.GetComponent<CharacterStats>());
+			}
+		}
+
+
+		public void SetTarget(CharacterStats target)
+		{
+			this.target = target;
+			animator.SetBool("HasTarget", target != null);
+		}
+
+		public void Attack()
+		{
+			// Do attack here
+		}
+
+		void Start()
+		{
+			stateMachine = GetComponent<StateMachine>();
+
+
+			stateMachine.SetStates(new Dictionary<Type,BaseState>() {
+				{ typeof(IdleState), new IdleState(this) },
+				{ typeof(ChaseState), new ChaseState(this) },
+				{ typeof(AttackState), new AttackState(this) }
+			});
+
+
+			navMeshAgent = GetComponent<NavMeshAgent>();
+			navMeshAgent.updateRotation = false;
+			stats = GetComponent<CharacterStats>();
+			animator = GetComponent<Animator>();
+
+		}
 
 		
 
-		//public float senseRadius = 10;
-  //      public float attackRange = 1;
 
-  //      CharacterStats target;
+		// Update is called once per frame
+		void Update()
+		{
+			if(target) {
 
-
-
-		//private void OnTriggerEnter(Collider other)
-		//{
-		//	if(other.CompareTag("Player")) {
-		//		target = other.GetComponent<CharacterStats>();
-		//		SetState(EnemyState.Chase);
-		//	}
-		//}
-
-
-		//public void SetTarget(CharacterStats target)
-		//{
-  //          this.target = target;
-		//}
-
-		//public void Attack()
-		//{
-		//	// Do attack here
-		//}
-
-		//void Start()
-  //      {
-  //          navMeshAgent = GetComponent<NavMeshAgent>();
-  //          stats = GetComponent<CharacterStats>();
-  //          animator = GetComponent<Animator>();
+				Vector3 view = target.transform.position - transform.position;
+				view.y = 0f;
+				transform.rotation = Quaternion.LookRotation(view);
+				 
+			}
 			
-		//}
-
-		//void SetState(EnemyState enemyState)
-		//{
-		//	state = enemyState;
-		//	switch(state) {
-		//	case EnemyState.Idle:
-		//		animator.SetTrigger("Idle");
-		//		break;
-		//	case EnemyState.Attack:
-		//		animator.SetTrigger("Attack");
-		//		break;
-		//	case EnemyState.Chase:
-		//		animator.SetTrigger("Move");
-		//		break;
-		//	}
-			
-		//}
-
-		
-
-		//// Update is called once per frame
-		//void Update()
-  //      {
-		//	if(target != null) {
-		//		navMeshAgent.SetDestination(target.transform.position);
-		//		if(navMeshAgent.remainingDistance < attackRange) {
-		//			SetState(EnemyState.Attack);
-		//		}
-
-		//	} else {
-		//		SetState(EnemyState.Idle);
-		//	}
-  //      }
+		}
 	}
 }
 
