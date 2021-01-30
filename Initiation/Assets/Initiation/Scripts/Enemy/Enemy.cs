@@ -42,7 +42,9 @@ namespace Initiation {
 		public void SetTarget(CharacterStats target)
 		{
 			this.target = target;
-			animator.SetBool("HasTarget", target != null);
+			bool hasTarget = target != null;
+			navMeshAgent.updateRotation = hasTarget;
+			animator.SetBool("HasTarget",hasTarget);
 		}
 
 
@@ -104,7 +106,7 @@ namespace Initiation {
 		void Update()
 		{
 			if(target) {
-
+				
 				Vector3 view = target.transform.position - transform.position;
 				view.y = 0f;
 				transform.rotation = Quaternion.LookRotation(view);
