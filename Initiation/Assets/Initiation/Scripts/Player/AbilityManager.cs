@@ -11,9 +11,14 @@ public class AbilityManager : NetworkBehaviour
     }
 
     public GameObject fireballPrefab;
-    
+    public Transform shootAnchor;
+
+
     [Range(0, 5)] 
     public float cooldownFireball = 2.0f;
+
+    [Range(0,5)]
+    public float fireballVelocity = 25.0f;
 
     [SyncVar]
     private float remainingCooldownFireball = 0;
@@ -42,9 +47,9 @@ public class AbilityManager : NetworkBehaviour
         }
         remainingCooldownFireball = cooldownFireball;
         GameObject fireball = Instantiate(fireballPrefab);
-        fireball.transform.position = gameObject.transform.position + gameObject.transform.forward * 0.2f;
-        fireball.transform.rotation = gameObject.transform.rotation;
-        fireball.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 25f;
+        fireball.transform.position = shootAnchor.position;
+        fireball.transform.rotation = shootAnchor.rotation;
+        fireball.GetComponent<Rigidbody>().velocity = shootAnchor.forward * fireballVelocity;
         NetworkServer.Spawn(fireball);
     }
 

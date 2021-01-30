@@ -1,7 +1,14 @@
-﻿using Mirror;
+﻿using UnityEngine;
+using Mirror;
+using System;
 
 public class CharacterStats : NetworkBehaviour
 {
+    public event Action<CharacterStats> OnTakeDammage;
+    public event Action<CharacterStats> OnHeal;
+    public event Action<CharacterStats> OnDie;
+
+
     public int maxHealth = 10;
 
     [SyncVar]
@@ -19,9 +26,11 @@ public class CharacterStats : NetworkBehaviour
         }
 
         health -= amount;
+        OnTakeDammage?.Invoke(this);
         if (health <= 0)
         {
             health = 0;
+            OnDie?.Invoke(this);
             dead = true;
         }
     }
@@ -39,5 +48,12 @@ public class CharacterStats : NetworkBehaviour
         {
             health = maxHealth;
         }
+        OnHeal?.Invoke(this);
     }
+
+	//private void OnTriggerEnter(Collider other)
+	//{
+ //       print($"CharacterStats {name} OnTriggerEnter");
+	//}
+
 }

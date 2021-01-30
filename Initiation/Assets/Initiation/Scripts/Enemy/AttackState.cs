@@ -20,38 +20,38 @@ namespace Initiation {
 			if(dist > enemy.attackRange) {
 				return typeof(ChaseState);
 			}
+			if(enemy.target.dead) {
+				return typeof(VictoryState);
+			}
 
 			
 			// do cooldown
 			if(Time.time - lastAttackTime > enemy.attackSpeed) {
-				enemy.animator.SetBool("Attack",true);
+				enemy.animator.SetTrigger("Attack");
 				lastAttackTime = Time.time;
 
-				// TODO: check hit and deal damage
-				
-
-			} else {
-				enemy.animator.SetBool("Attack",false);
+				Ray ray = new Ray(enemy.attackOrigin.position,enemy.attackOrigin.forward * enemy.attackRange);
+				Debug.DrawRay(ray.origin,ray.direction);
+				RaycastHit hit;
+				if(Physics.Raycast(ray,out hit, enemy.attackRange, enemy.mask)) {
+					Debug.Log(hit.transform.name);
+					enemy.target.CmdTakeDamage(enemy.attackDamage);
+				}
 			}
-			Ray ray = new Ray(enemy.transform.position,enemy.transform.forward * enemy.attackRange);
-			Debug.DrawRay(ray.origin,ray.direction);
-			RaycastHit hit;
-			if(Physics.Raycast(ray,out hit)) {
-				Debug.Log(hit.transform.name);
-			}
+			
+			
 
 			return null;
 		}
 
 		public override void Start()
 		{
-			enemy.animator.SetBool("Attack",true);
 			base.Start();
 		}
 
 		public override void Finish()
 		{
-			enemy.animator.SetBool("Attack",false);
+			//enemy.animator.SetBool("Attack",false);
 			base.Finish();
 		}
 	}

@@ -19,12 +19,14 @@ namespace Initiation {
 		public NavMeshAgent navMeshAgent { get; private set; }
 		public CharacterStats stats { get; private set; }
 		public Animator animator { get; private set; }
-		
+
+		public Transform attackOrigin;
 
 		
 		public float senseRadius = 10;
 		public float attackRange = 1;
 		public float attackSpeed = 1;
+		public int attackDamage = 2;
 
 		public CharacterStats target; // { get; private set; }
 
@@ -44,10 +46,6 @@ namespace Initiation {
 			animator.SetBool("HasTarget", target != null);
 		}
 
-		public void Attack()
-		{
-			// Do attack here
-		}
 
 		void Start()
 		{
@@ -57,7 +55,8 @@ namespace Initiation {
 			stateMachine.SetStates(new Dictionary<Type,BaseState>() {
 				{ typeof(IdleState), new IdleState(this) },
 				{ typeof(ChaseState), new ChaseState(this) },
-				{ typeof(AttackState), new AttackState(this) }
+				{ typeof(AttackState), new AttackState(this) },
+				{ typeof(VictoryState), new VictoryState(this) }
 			});
 
 
@@ -66,9 +65,28 @@ namespace Initiation {
 			stats = GetComponent<CharacterStats>();
 			animator = GetComponent<Animator>();
 
+			stats.OnTakeDammage += Stats_OnTakeDammage;
+			stats.OnDie += Stats_OnDie;
+
 		}
 
-		
+		private void Stats_OnDie(CharacterStats obj)
+		{
+			animator.SetBool("IsDead", true);
+		}
+
+		private void Stats_OnTakeDammage(CharacterStats obj)
+		{
+			animator.SetTrigger("GetHit");
+		}
+
+		private void OnDestroy()
+		{
+			stats.OnTakeDammage -= Stats_OnTakeDammage;
+			stats.OnDie -= Stats_OnDie;
+		}
+
+
 
 
 		// Update is called once per frame
