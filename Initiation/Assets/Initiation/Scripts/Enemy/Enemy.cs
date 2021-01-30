@@ -66,7 +66,7 @@ namespace Initiation {
 			stats = GetComponent<CharacterStats>();
 			animator = GetComponent<Animator>();
 
-			stats.OnTakeDammage += Stats_OnTakeDammage;
+			stats.OnTakeDamage += Stats_OnTakeDamage;
 			stats.OnDie += Stats_OnDie;
 
 		}
@@ -88,14 +88,14 @@ namespace Initiation {
 			
 		}
 
-		private void Stats_OnTakeDammage(CharacterStats obj)
+		private void Stats_OnTakeDamage(CharacterStats obj)
 		{
 			animator.SetTrigger("GetHit");
 		}
 
 		private void OnDestroy()
 		{
-			stats.OnTakeDammage -= Stats_OnTakeDammage;
+			stats.OnTakeDamage -= Stats_OnTakeDamage;
 			stats.OnDie -= Stats_OnDie;
 		}
 

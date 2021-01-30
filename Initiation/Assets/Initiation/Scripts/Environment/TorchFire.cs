@@ -5,17 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Light))]
 public class TorchFire : MonoBehaviour
 {
-    Gradient color;
-    Light light;
+    public Gradient color;
+    public Light torchlight;
 
     void Start()
     {
-        
-    }
 
-    // Update is called once per frame
+    }
     void Update()
     {
-        
+
     }
 }
