@@ -70,6 +70,7 @@ public class AbilityManager : NetworkBehaviour
         available.Remove(permanentAbility);
         available.Shuffle();
         abilities.Remove(available[0]);
+        Debug.Log($"Lost {available[0]}");
     }
 
     [Command]
@@ -94,5 +95,6 @@ public class AbilityManager : NetworkBehaviour
             return;
         }
         Debug.Log("Rune!");
+        CmdLoseAbility();
     }
 }

@@ -32,6 +32,7 @@ namespace Initiation
         private List<PlayerController> players;
         private List<NetworkStartPosition> spawnPoints;
         public List<RuneManager> runes;
+        public RitualTrigger ritualTrigger;
 
         public override void OnStartServer()
         {
@@ -47,6 +48,11 @@ namespace Initiation
             players = new List<PlayerController>();
             Debug.Log("Generated player list");
             spawnPoints = new List<NetworkStartPosition>(FindObjectsOfType<NetworkStartPosition>());
+            foreach (RuneManager rm in runes)
+            {
+                rm.OnRuneActivation += ritualTrigger.OnRuneActivation;
+            }
+            ritualTrigger.requiredRunes = runes.Count;
         }
 
         public override void OnClientConnect(NetworkConnection conn)
@@ -72,6 +78,7 @@ namespace Initiation
             gameobject.transform.position = spawnPoints[players.Count % spawnPoints.Count].transform.position;
             gameobject.transform.rotation = spawnPoints[players.Count % spawnPoints.Count].transform.rotation;
 
+            // TODO(@shoeffner): If a player joins AFTER a rune is activated, they will not lose abilites at the moment...
             AbilityManager am = gameobject.GetComponent<AbilityManager>();
             am.permanentAbility = permanentAbilitiesPerPlayer[players.Count % permanentAbilitiesPerPlayer.Count];
             foreach (RuneManager rm in runes)
@@ -80,6 +87,7 @@ namespace Initiation
             }
 
             players.Add(gameobject.GetComponent<PlayerController>());
+            ritualTrigger.playersRequiredForRitual = players.Count;
             // call this to use this gameobject as the primary controller
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }

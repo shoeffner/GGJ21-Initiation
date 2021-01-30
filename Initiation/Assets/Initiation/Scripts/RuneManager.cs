@@ -5,7 +5,7 @@ using Mirror;
 public class RuneManager : NetworkBehaviour
 {
     [SyncVar]
-    bool active = false;
+    public bool active = false;
 
     public event Action<RuneManager> OnRuneActivation;
 
