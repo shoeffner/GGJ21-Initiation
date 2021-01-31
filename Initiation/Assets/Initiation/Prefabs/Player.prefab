@@ -629,7 +629,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   mainCamera: {fileID: 0}
   cameraOffset: {x: 0, y: 12, z: 0}
-  cameraLookAtOffset: {x: 0, y: 2.35, z: 0}
+  cameraLookAtOffset: {x: 0, y: 0, z: 3.26}
   groundLayer: Ground
   moveSpeed: 7.5
   jumpHeight: 1.2

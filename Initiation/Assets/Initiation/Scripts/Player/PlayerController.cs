@@ -63,7 +63,7 @@ namespace Initiation
         {
             mainCamera.transform.position = transform.position + cameraOffset;
             mainCamera.transform.LookAt(transform.position + cameraLookAtOffset);
-            forward = Vector3.ProjectOnPlane(mainCamera.transform.up, Vector3.up).normalized;
+            forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
             right = Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up).normalized;
         }
 
