@@ -114,7 +114,7 @@ namespace Initiation
         {
             if (Input.GetKey(KeyCode.F))
             {
-                abilityManager.healingRangeIndicator.SetActive(abilityManager.remainingCooldownHealing <= 0);
+                abilityManager.healingRangeIndicator.SetActive(abilityManager.abilities.Contains(AbilityManager.Ability.HEALING) && abilityManager.remainingCooldownHealing <= 0);
             }
 
             if (Input.GetKeyUp(KeyCode.F) && !Input.GetKey(KeyCode.Escape))
