@@ -128,6 +128,26 @@ namespace Initiation
                 abilityManager.healingRangeIndicator.SetActive(false);
             }
 
+            if (Input.GetKey(KeyCode.R))
+            {
+                abilityManager.shieldRangeIndicator.SetActive(abilityManager.abilities.Contains(AbilityManager.Ability.SHIELD) && abilityManager.remainingCooldownShield <= 0);
+            }
+            if (Input.GetKeyUp(KeyCode.R) && !Input.GetKey(KeyCode.Escape))
+            {
+                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit playerHit;
+                if (Physics.Raycast(camRay, out playerHit, Mathf.Infinity, LayerMask.GetMask("Player")))
+                {
+                    CharacterStats targetCS = playerHit.collider.gameObject.GetComponent<CharacterStats>();
+                    Debug.Log(playerHit);
+                    Debug.Log(playerHit.collider.gameObject);
+                    Debug.Log(targetCS);
+                    Debug.Log(abilityManager);
+                    abilityManager.CmdShield(targetCS);
+                }
+                abilityManager.shieldRangeIndicator.SetActive(false);
+            }
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 GetComponent<AbilityManager>().CmdCastFireball();

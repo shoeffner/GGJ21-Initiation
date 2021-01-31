@@ -41,7 +41,8 @@ namespace Initiation
             NetworkServer.RegisterHandler<CreatePlayerMessage>(OnCreateCharacter);
             permanentAbilitiesPerPlayer = new List<AbilityManager.Ability> {
                 FIREBALL,
-                HEALING
+                HEALING,
+                SHIELD,
             };
             permanentAbilitiesPerPlayer.Shuffle();
             Debug.Log("Shuffled abilities");

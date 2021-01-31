@@ -17,6 +17,9 @@ public class CharacterStats : NetworkBehaviour
     [SyncVar]
     public bool dead = false;
 
+    [SyncVar]
+    public bool isShielded = false;
+
     public void Awake()
     {
         health = Math.Min(health, maxHealth);
@@ -29,8 +32,11 @@ public class CharacterStats : NetworkBehaviour
             return;
         }
 
-        health -= amount;
-        OnTakeDamage?.Invoke(this);
+        if (!isShielded)
+        {
+            health -= amount;
+            OnTakeDamage?.Invoke(this);
+        }
         if (health <= 0)
         {
             health = 0;

@@ -9,7 +9,7 @@ public class DamageTriggerTarget : NetworkBehaviour
     
     void OnTriggerEnter(Collider collider)
     {
-        print($"DamageTriggerTarget {name} hits {collider.name} OnTriggerEnter");
+        // print($"DamageTriggerTarget {name} hits {collider.name} OnTriggerEnter");
         CharacterStats characterStats = collider.gameObject.GetComponent<CharacterStats>();
         if (characterStats != null)
         {

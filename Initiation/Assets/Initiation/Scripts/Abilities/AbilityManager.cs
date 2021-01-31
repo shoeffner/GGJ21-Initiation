@@ -7,7 +7,7 @@ public class AbilityManager : NetworkBehaviour
 {
     public enum Ability
     {
-        FIREBALL, HEALING
+        FIREBALL, HEALING, SHIELD
     }
 
     [Header("Fireball")]
@@ -20,11 +20,20 @@ public class AbilityManager : NetworkBehaviour
     [Header("Healing")]
     public GameObject healingArea;
     public float cooldownHealing = 3.0f;
-    public float healingRange = 10f;
+    public float healingCastRange = 10f;
     public GameObject healingRangeIndicator;
-
     [SyncVar]
     public float remainingCooldownHealing = 0;
+
+    [Header("Shield")]
+    public GameObject shield;
+    public float cooldownShield = 4.0f;
+    public float shieldCastRange = 5f;
+    public float shieldDuration = 3.0f;
+    public GameObject shieldRangeIndicator;
+    [SyncVar]
+    public float remainingCooldownShield = 0;
+
 
     [Header("Permanent and available")]
     [SyncVar]
@@ -34,7 +43,8 @@ public class AbilityManager : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         CmdLearnAllAbilities();
-        healingRangeIndicator.transform.localScale = new Vector3(healingRange, 0, healingRange);
+        healingRangeIndicator.transform.localScale = new Vector3(healingCastRange, 0, healingCastRange);
+        shieldRangeIndicator.transform.localScale = new Vector3(shieldCastRange, 0, shieldCastRange);
     }
 
     [Command]
@@ -67,7 +77,7 @@ public class AbilityManager : NetworkBehaviour
         {
             return;
         }
-        if (Vector3.Distance(targetPosition, transform.position) > healingRange)
+        if (Vector3.Distance(targetPosition, transform.position) > healingCastRange)
         {
             return;
         }
@@ -75,6 +85,28 @@ public class AbilityManager : NetworkBehaviour
         GameObject healing = Instantiate(healingArea);
         healing.GetComponent<HealingArea>().CastAt(targetPosition);
         NetworkServer.Spawn(healing);
+    }
+
+    [Command]
+    public void CmdShield(CharacterStats character)
+    {
+        if (!abilities.Contains(Ability.SHIELD))
+        {
+            Debug.Log("Shield unavailable");
+            return;
+        }
+        if (remainingCooldownShield > 0)
+        {
+            return;
+        }
+        if (Vector3.Distance(character.transform.position, transform.position) > shieldCastRange)
+        {
+            return;
+        }
+        remainingCooldownShield = cooldownShield;
+        GameObject shield = Instantiate(this.shield);
+        shield.GetComponent<Shield>().CastAt(character, shieldDuration);
+        NetworkServer.Spawn(shield);
     }
 
     [Command]
@@ -97,7 +129,8 @@ public class AbilityManager : NetworkBehaviour
     {
         abilities.AddRange(new List<Ability>{
             Ability.FIREBALL,
-            Ability.HEALING
+            Ability.HEALING,
+            Ability.SHIELD,
         });
     }
 
@@ -106,6 +139,7 @@ public class AbilityManager : NetworkBehaviour
         float dt = Time.deltaTime;
         remainingCooldownFireball -= dt;
         remainingCooldownHealing -= dt;
+        remainingCooldownShield -= dt;
     }
 
     [ClientRpc]
