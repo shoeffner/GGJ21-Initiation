@@ -10,23 +10,31 @@ public class AbilityManager : NetworkBehaviour
         FIREBALL, HEALING
     }
 
+    [Header("Fireball")]
     public GameObject fireballPrefab;
-    public Transform shootAnchor;
-
-    [Range(0, 5)] 
     public float cooldownFireball = 2.0f;
-
     [SyncVar]
     private float remainingCooldownFireball = 0;
+    public Transform shootAnchor;
+
+    [Header("Healing")]
+    public GameObject healingArea;
+    public float cooldownHealing = 3.0f;
+    public float healingRange = 10f;
+    public GameObject healingRangeIndicator;
 
     [SyncVar]
-    public Ability permanentAbility;
+    public float remainingCooldownHealing = 0;
 
+    [Header("Permanent and available")]
+    [SyncVar]
+    public Ability permanentAbility;
     public readonly SyncList<Ability> abilities = new SyncList<Ability>();
 
     public override void OnStartLocalPlayer()
     {
         CmdLearnAllAbilities();
+        healingRangeIndicator.transform.localScale = new Vector3(healingRange, 0, healingRange);
     }
 
     [Command]
@@ -48,14 +56,25 @@ public class AbilityManager : NetworkBehaviour
     }
 
     [Command]
-    public void CmdHeal(CharacterStats target, int amount)
+    public void CmdHeal(Vector3 targetPosition)
     {  
         if (!abilities.Contains(Ability.HEALING))
         {
             Debug.Log("Healing unavailable");
             return;
         }
-        target.Heal(amount);
+        if (remainingCooldownHealing > 0)
+        {
+            return;
+        }
+        if (Vector3.Distance(targetPosition, transform.position) > healingRange)
+        {
+            return;
+        }
+        remainingCooldownHealing = cooldownHealing;
+        GameObject healing = Instantiate(healingArea);
+        healing.GetComponent<HealingArea>().CastAt(targetPosition);
+        NetworkServer.Spawn(healing);
     }
 
     [Command]
@@ -84,7 +103,9 @@ public class AbilityManager : NetworkBehaviour
 
     public void Update()
     {
-        remainingCooldownFireball -= Time.deltaTime;
+        float dt = Time.deltaTime;
+        remainingCooldownFireball -= dt;
+        remainingCooldownHealing -= dt;
     }
 
     [ClientRpc]

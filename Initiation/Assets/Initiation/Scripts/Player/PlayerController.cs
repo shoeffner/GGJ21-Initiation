@@ -26,6 +26,7 @@ namespace Initiation
         private Animator animator = null;
 
         private CharacterStats characterStats;
+        private AbilityManager abilityManager;
 
         const float SQRT_OF_2 = 1.41421356237f;
 
@@ -51,6 +52,11 @@ namespace Initiation
             {
                 characterStats = GetComponent<CharacterStats>();
             }
+
+            if (abilityManager == null)
+            {
+                abilityManager = GetComponent<AbilityManager>();
+            }
         }
 
         void UpdateCamera()
@@ -64,7 +70,7 @@ namespace Initiation
         void Move()
         {
             rb.velocity = moveForce;
-            animator.SetFloat("MovementSpeed",rb.velocity.sqrMagnitude);
+            animator.SetFloat("MovementSpeed", rb.velocity.sqrMagnitude);
         }
 
         void Rotate()
@@ -81,7 +87,6 @@ namespace Initiation
                 //transform.rotation = newRotation;
                 rb.rotation = newRotation;
             }
-            
         }
 
         void Update()
@@ -96,22 +101,31 @@ namespace Initiation
                 return;
             }
 
-
             float inputHorizontal = Input.GetAxis("Horizontal");
             float inputVertical = Input.GetAxis("Vertical");
             Vector3 forwardMovement = forward * inputVertical;
             Vector3 rightMovement = right * inputHorizontal;
             moveForce = (forwardMovement + rightMovement).normalized * moveSpeed;
 
+            Abilities();
+        }
 
-            if (Input.GetKeyDown(KeyCode.L))
+        void Abilities()
+        {
+            if (Input.GetKey(KeyCode.F))
             {
-                GetComponent<AbilityManager>().CmdLoseAbility();
+                abilityManager.healingRangeIndicator.SetActive(abilityManager.abilities.Contains(AbilityManager.Ability.HEALING) && abilityManager.remainingCooldownHealing <= 0);
             }
 
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyUp(KeyCode.F) && !Input.GetKey(KeyCode.Escape))
             {
-                GetComponent<AbilityManager>().CmdLearnAllAbilities();
+                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit floorHit;
+                if (Physics.Raycast(camRay, out floorHit, Mathf.Infinity, LayerMask.GetMask(groundLayer)))
+                {
+                    abilityManager.CmdHeal(floorHit.point);
+                }
+                abilityManager.healingRangeIndicator.SetActive(false);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))

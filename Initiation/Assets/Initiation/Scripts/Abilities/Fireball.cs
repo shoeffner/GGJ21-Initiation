@@ -30,7 +30,4 @@ public class Fireball : NetworkBehaviour
         transform.rotation = am.shootAnchor.rotation;
         GetComponent<Rigidbody>().velocity = am.shootAnchor.forward * fireballVelocity;
     }
-
-	
-
 }
