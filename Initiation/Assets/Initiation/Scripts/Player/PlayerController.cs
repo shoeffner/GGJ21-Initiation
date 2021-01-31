@@ -25,6 +25,7 @@ namespace Initiation
         private Animator animator = null;
 
         private CharacterStats characterStats;
+        private AbilityManager abilityManager;
 
         const float SQRT_OF_2 = 1.41421356237f;
 
@@ -50,6 +51,11 @@ namespace Initiation
             if (characterStats == null)
             {
                 characterStats = GetComponent<CharacterStats>();
+            }
+
+            if (abilityManager == null)
+            {
+                abilityManager = GetComponent<AbilityManager>();
             }
         }
 
@@ -97,7 +103,6 @@ namespace Initiation
                 Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
                 transform.rotation = newRotation;
             }
-            
         }
 
         void Update()
@@ -112,14 +117,26 @@ namespace Initiation
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                GetComponent<AbilityManager>().CmdLoseAbility();
-            }
+            Abilities();
+            Move();
+            UpdateCamera();
+        }
 
-            if (Input.GetKeyDown(KeyCode.K))
+        void Abilities()
+        {
+            if (Input.GetKey(KeyCode.F))
             {
-                GetComponent<AbilityManager>().CmdLearnAllAbilities();
+                abilityManager.healingRangeIndicator.SetActive(abilityManager.remainingCooldownHealing <= 0);
+            }
+            if (Input.GetKeyUp(KeyCode.F) && !Input.GetKey(KeyCode.Escape))
+            {
+                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit floorHit;
+                if (Physics.Raycast(camRay, out floorHit, Mathf.Infinity, LayerMask.GetMask(groundLayer)))
+                {
+                    abilityManager.CmdHeal(floorHit.point);
+                }
+                abilityManager.healingRangeIndicator.SetActive(false);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -127,8 +144,6 @@ namespace Initiation
                 GetComponent<AbilityManager>().CmdCastFireball();
             }
 
-            Move();
-            UpdateCamera();
         }
 
         void FixedUpdate()
