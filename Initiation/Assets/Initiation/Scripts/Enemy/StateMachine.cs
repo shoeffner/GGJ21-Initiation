@@ -23,6 +23,10 @@ namespace Initiation {
 
 		private void Update()
 		{
+			if(states == null) {
+				return;
+			}
+
 			if(CurrentState == null) {
 				Type stateType = states.Keys.First();
 				SwitchToNewState(stateType);

@@ -7,6 +7,7 @@ using Mirror;
 [RequireComponent(typeof(SphereCollider))]
 public class RitualTrigger : NetworkBehaviour
 {
+    public List<GameObject> activateOnGameWon;
     public SphereCollider sphereCollider;
 
     public void OnRuneActivation(RuneManager runeManager)
@@ -54,5 +55,8 @@ public class RitualTrigger : NetworkBehaviour
     void RpcGameWon()
     {
         Debug.Log("GAME WON!");
+		foreach(GameObject obj in activateOnGameWon) {
+            obj.SetActive(true);
+		}
     }
 }

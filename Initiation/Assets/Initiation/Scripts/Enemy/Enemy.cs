@@ -48,7 +48,7 @@ namespace Initiation {
 		}
 
 
-		void Start()
+		void Awake()
 		{
 			stateMachine = GetComponent<StateMachine>();
 

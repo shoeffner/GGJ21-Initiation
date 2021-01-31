@@ -532,7 +532,7 @@ MonoBehaviour:
   syncInterval: 0.1
   rb: {fileID: 0}
   mainCamera: {fileID: 0}
-  cameraOffset: {x: 5.21, y: 9.96, z: -1.44}
+  cameraOffset: {x: 0, y: 12, z: 0}
   cameraLookAtOffset: {x: 0, y: 2.35, z: 0}
   groundLayer: Ground
   moveSpeed: 7.5

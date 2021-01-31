@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Challeng2Manager : Challenge1Manager
 {
-    public new List<CharacterStats> targets;
+    public List<CharacterStats> targetCharacters;
 
 	// Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class Challeng2Manager : Challenge1Manager
             return;
         }
 
-        bool complete = targets.TrueForAll(t => t.dead);
+        bool complete = targetCharacters.TrueForAll(t => t.dead);
         if(complete) {
             RpcActivateRune();
             challengeCompleted = complete;
