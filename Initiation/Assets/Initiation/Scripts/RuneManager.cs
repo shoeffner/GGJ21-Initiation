@@ -28,7 +28,10 @@ public class RuneManager : NetworkBehaviour
     [ClientRpc]
     public void RpcActivateLight()
     {
-        GetComponentInChildren<Light>().enabled = true;
+        foreach (Light light in GetComponentsInChildren<Light>())
+        {
+            light.enabled = true;
+        }
     }
 
 }
