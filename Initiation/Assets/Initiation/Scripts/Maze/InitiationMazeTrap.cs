@@ -38,12 +38,14 @@ namespace Initiation {
 
         void OnTriggerEnter(Collider other)
         {
-            if(isActivated && other.CompareTag("Player")) {
+            if(isActivated &&
+				(other.CompareTag("Player") || other.CompareTag("Enemy"))
+				) {
                 int id = -1;
                 if(direction == InitiationMazeTransformer.MoveDirection.North || direction == InitiationMazeTransformer.MoveDirection.South) {
-                    id = cellId.x;
-                } else {
                     id = cellId.y;
+                } else {
+                    id = cellId.x;
                 }
                 transformer.AlterMaze(direction,id);
                 directionSprite.sprite = sprites[(int)direction];

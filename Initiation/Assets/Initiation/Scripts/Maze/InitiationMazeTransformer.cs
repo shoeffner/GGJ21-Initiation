@@ -62,7 +62,7 @@ namespace Initiation {
 
 
 
-		GameObject CreateCell(GameObject cell,Vector3 pos)
+		GameObject CreateCell(GameObject cell,Vector3 pos, Vector2Int newCellId)
 		{
 
 			GameObject newCell = Instantiate(mazeComponentsDict[cell.name]);
@@ -71,7 +71,7 @@ namespace Initiation {
 
 			InitiationMazeTrap trap = cell.GetComponent<InitiationMazeTrap>();
 			if(trap != null) {
-				newCell.GetComponent<InitiationMazeTrap>().InitTrap(trap.cellId,trap.direction,trap.maze,trap.transformer,trap.isActivated);
+				newCell.GetComponent<InitiationMazeTrap>().InitTrap(newCellId,trap.direction,trap.maze,trap.transformer,trap.isActivated);
 			}
 
 
@@ -140,7 +140,7 @@ namespace Initiation {
 
 				for(int row = maze.Rows - 1; row >= 0; --row) {
 					if(maze.MazeCells[row,index] == last) {
-						GameObject replace = CreateCell(first,last.transform.position - new Vector3(0,0,maze.CellWidth));
+						GameObject replace = CreateCell(first,last.transform.position - new Vector3(0,0,maze.CellWidth),new Vector2Int(row,index));
 						maze.MazeCells[row,index] = replace;
 					} else {
 						maze.MazeCells[row,index] = maze.MazeCells[row - 1,index];
@@ -161,7 +161,7 @@ namespace Initiation {
 
 				for(int row = 0; row < maze.Rows; ++row) {
 					if(maze.MazeCells[row,index] == last) {
-						GameObject replace = CreateCell(first,last.transform.position + new Vector3(0,0,maze.CellWidth));
+						GameObject replace = CreateCell(first,last.transform.position + new Vector3(0,0,maze.CellWidth), new Vector2Int(row, index));
 						maze.MazeCells[row,index] = replace;
 					} else {
 						maze.MazeCells[row,index] = maze.MazeCells[row + 1,index];
@@ -182,7 +182,7 @@ namespace Initiation {
 
 				for(int col = 0; col < maze.Rows; ++col) {
 					if(maze.MazeCells[index,col] == last) {
-						GameObject replace = CreateCell(first,last.transform.position + new Vector3(maze.CellWidth,0,0));
+						GameObject replace = CreateCell(first,last.transform.position + new Vector3(maze.CellWidth,0,0),new Vector2Int(index,col));
 						maze.MazeCells[index,col] = replace;
 					} else {
 						maze.MazeCells[index,col] = maze.MazeCells[index,col + 1];
@@ -202,7 +202,7 @@ namespace Initiation {
 
 				for(int col = maze.Rows - 1; col >= 0; --col) {
 					if(maze.MazeCells[index,col] == last) {
-						GameObject replace = CreateCell(first,last.transform.position - new Vector3(maze.CellWidth,0,0));
+						GameObject replace = CreateCell(first,last.transform.position - new Vector3(maze.CellWidth,0,0),new Vector2Int(index, col));
 						maze.MazeCells[index,col] = replace;
 					} else {
 						maze.MazeCells[index,col] = maze.MazeCells[index,col - 1];
