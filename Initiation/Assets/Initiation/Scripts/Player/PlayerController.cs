@@ -78,7 +78,8 @@ namespace Initiation
                 Vector3 playerToMouse = floorHit.point - transform.position;
                 playerToMouse.y = 0f;
                 Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-                transform.rotation = newRotation;
+                //transform.rotation = newRotation;
+                rb.rotation = newRotation;
             }
             
         }
