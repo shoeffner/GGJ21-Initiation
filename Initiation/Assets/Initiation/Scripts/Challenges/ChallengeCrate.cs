@@ -1,18 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ChallengeCrate : MonoBehaviour
+using Mirror;
+public class ChallengeCrate : NetworkBehaviour
 {
     public int id;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ChallengeTarget : MonoBehaviour
+using Mirror;
+public class ChallengeTarget : NetworkBehaviour
 {
 
     public int id;
+    
+    [SyncVar]
     public bool isComplete = false;
-    public float radius = 1;
+    
     public Challenge1Manager manager;
-
     public ParticleSystem particle;
 
     void Start()

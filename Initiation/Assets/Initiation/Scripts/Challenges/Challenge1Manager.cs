@@ -8,27 +8,43 @@ public class Challenge1Manager : NetworkBehaviour
     public List<ChallengeTarget> targets;
 
     public GameObject rune;
+	[SyncVar]
     bool challengeCompleted;
+
     void Start()
     {
+		if(!isServer) {
+            return;
+		}
         rune.SetActive(false);
+    }
+
+	[ClientRpc]
+	public void RpcActivateRune()
+	{
+        rune.SetActive(true);
+        Hashtable ht = new Hashtable();
+        ht.Add(iT.ScaleFrom.y,-4);
+        ht.Add(iT.ScaleFrom.time,2);
+        iTween.ScaleFrom(rune,ht);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(challengeCompleted) {
+		if(!isServer) {
             return;
 		}
+
+        if(challengeCompleted) {			
+            return;
+		}
+
         bool complete = targets.TrueForAll(t => t.isComplete);
         print($"challenge complete {complete}");
 		if(complete) {
-            rune.SetActive(true);
-            //Hashtable ht = new Hashtable();
-            //ht.Add(iT.MoveFrom.y,-4);
-            //ht.Add(iT.MoveFrom.time,2);
-            //iTween.MoveFrom(rune,ht);
-            //challengeCompleted = complete;
-        }
+            RpcActivateRune();
+            challengeCompleted = complete;
+		}
     }
 }
