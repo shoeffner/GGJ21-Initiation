@@ -9,7 +9,7 @@ public class Challenge1Manager : NetworkBehaviour
 
     public GameObject rune;
 	[SyncVar]
-    bool challengeCompleted;
+    public bool challengeCompleted;
 
     void Start()
     {
