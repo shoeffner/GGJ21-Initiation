@@ -35,7 +35,7 @@ namespace Initiation {
 					Debug.DrawRay(ray.origin,ray.direction * enemy.senseRadius);
 					RaycastHit hit;
 					if(Physics.Raycast(ray,out hit,enemy.attackRange,enemy.mask)) {
-						//Debug.Log($"Enemy sensed {hit.transform.name}");
+						Debug.Log($"Enemy sensed {hit.transform.name}");
 						enemy.SetTarget(hit.transform.GetComponent<CharacterStats>());
 					}
 				}

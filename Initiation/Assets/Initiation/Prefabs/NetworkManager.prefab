@@ -80,7 +80,9 @@ MonoBehaviour:
   - {fileID: 1230081741081257095, guid: a9b6ea3ea19625344b6ff5d4ec1a44e0, type: 3}
   - {fileID: 4562118550202613332, guid: bb773942373e4434bb7c25004d4ee714, type: 3}
   - {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705, type: 3}
+  - {fileID: 1067925524328404, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
   runes: []
+  ritualTrigger: {fileID: 0}
 --- !u!114 &1046970477998454359
 MonoBehaviour:
   m_ObjectHideFlags: 0
