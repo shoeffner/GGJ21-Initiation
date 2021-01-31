@@ -7,11 +7,14 @@ using Mirror;
 
 namespace Initiation {
 	[RequireComponent(typeof(InitiationMazeSpawner))]
-	public class InitiationMazeTransformer:MonoBehaviour {
-		public List<GameObject> mazeComponents;
+	public class InitiationMazeTransformer:NetworkBehaviour {
 
-		Dictionary<string,GameObject> mazeComponentsDict;
+		
+		public SyncList<GameObject> mazeComponents = new SyncList<GameObject>();
 
+		
+		SyncDictionary<string,GameObject> mazeComponentsDict = new SyncDictionary<string, GameObject>();
+		
 		InitiationMazeSpawner maze;
 
 
@@ -22,27 +25,56 @@ namespace Initiation {
 			West
 		}
 
+		[SyncVar]
 		public MoveDirection moveDirection;
+		[SyncVar]
 		public int cellIdx = 0;
 
+		[SyncVar]
 		private bool moving = false;
 
-		private Dictionary<string,object> movementParams = new Dictionary<string,object>()
+		//private SyncDictionary<string,object> movementParams = new SyncDictionary<string,object>();
+		//	{
+		//	{iT.MoveBy.time, 1.0f},
+		//	{iT.MoveBy.easetype, iTween.EaseType.linear},
+		//	{iT.MoveBy.space, Space.World}
+		//};
+
+		private void Start()
 		{
-		{iT.MoveBy.time, 1.0f},
-		{iT.MoveBy.easetype, iTween.EaseType.linear},
-		{iT.MoveBy.space, Space.World}
-	};
 
+			//movementParams.Add(iT.MoveBy.time, 1.0f);
+			//movementParams.Add(iT.MoveBy.easetype,iTween.EaseType.linear);
+			//movementParams.Add(iT.MoveBy.space,Space.World);
 
-
-		void Start()
-		{
 			maze = GetComponent<InitiationMazeSpawner>();
 
-			mazeComponentsDict = new Dictionary<string,GameObject>();
-			foreach(GameObject obj in mazeComponents) {
-				mazeComponentsDict.Add(obj.name,obj);
+			
+
+			foreach(GameObject obj in maze.Floor) {
+				if(!mazeComponentsDict.ContainsKey(obj.name)) {
+					mazeComponentsDict.Add(obj.name,obj);
+				}
+			}
+
+			
+
+			foreach(GameObject obj in maze.Wall) {
+				if(!mazeComponentsDict.ContainsKey(obj.name)) {
+					mazeComponentsDict.Add(obj.name,obj);
+				}
+			}
+
+			foreach(GameObject obj in maze.Goals) {
+				if(!mazeComponentsDict.ContainsKey(obj.name)) {
+					mazeComponentsDict.Add(obj.name,obj);
+				}
+			}
+
+			foreach(GameObject obj in maze.Pillar) {
+				if(!mazeComponentsDict.ContainsKey(obj.name)) {
+					mazeComponentsDict.Add(obj.name,obj);
+				}
 			}
 		}
 
@@ -103,6 +135,8 @@ namespace Initiation {
 			if(moving) {
 				return;
 			}
+			maze = GetComponent<InitiationMazeSpawner>();
+
 			if(index < 0) {
 				Debug.LogError("Cannot move maze for negative indices.");
 				return;
@@ -126,7 +160,12 @@ namespace Initiation {
 
 			moving = true;
 
-			Dictionary<string,object> iTweenParams = new Dictionary<string,object>(movementParams);
+			
+			Dictionary<string,object> iTweenParams = new Dictionary<string,object>();
+			iTweenParams.Add(iT.MoveBy.time,1.0f);
+			iTweenParams.Add(iT.MoveBy.easetype,iTween.EaseType.linear);
+			iTweenParams.Add(iT.MoveBy.space,Space.World);
+
 
 			GameObject first = null;
 			GameObject last;

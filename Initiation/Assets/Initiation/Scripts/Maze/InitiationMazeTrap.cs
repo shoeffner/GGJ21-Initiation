@@ -5,20 +5,25 @@ using Mirror;
 
 namespace Initiation {
 
-    public class InitiationMazeTrap:MonoBehaviour {
+    public class InitiationMazeTrap:NetworkBehaviour {
 
         public Sprite[] sprites;
 
         public SpriteRenderer directionSprite;
 
+		[SyncVar]
         public Vector2Int cellId;
+        [SyncVar]
         public InitiationMazeTransformer.MoveDirection direction;
+        [SyncVar]
         public InitiationMazeSpawner maze;
+        [SyncVar]
         public InitiationMazeTransformer transformer;
+        [SyncVar]
         public bool isActivated = true;
 
 
-
+		
         public void InitTrap(Vector2Int cellId,
 			InitiationMazeTransformer.MoveDirection direction,
 			InitiationMazeSpawner maze,
@@ -48,7 +53,7 @@ namespace Initiation {
                     id = cellId.x;
                 }
                 transformer.AlterMaze(direction,id);
-                directionSprite.sprite = sprites[(int)direction];
+                //directionSprite.sprite = sprites[(int)direction];
             }
         }
     }

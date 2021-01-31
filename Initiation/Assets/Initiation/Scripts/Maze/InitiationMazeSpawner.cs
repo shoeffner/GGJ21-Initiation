@@ -100,7 +100,7 @@ namespace Initiation {
 					floor.name = Floor[floorIdx].name;
 					InitiationMazeTrap trap = floor.GetComponent<InitiationMazeTrap>();
 					if(trap != null) {
-						InitiationMazeTransformer.MoveDirection dir = (InitiationMazeTransformer.MoveDirection)Random.Range(0,4);
+						InitiationMazeTransformer.MoveDirection dir = trap.direction;
 						trap.InitTrap(new Vector2Int(row,column),dir,this, GetComponent<InitiationMazeTransformer>(), true);
 					}
 	
