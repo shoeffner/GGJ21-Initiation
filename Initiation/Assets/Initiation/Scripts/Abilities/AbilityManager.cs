@@ -7,7 +7,7 @@ public class AbilityManager : NetworkBehaviour
 {
     public enum Ability
     {
-        FIREBALL, HEALING, SHIELD
+        FIREBALL, HEALING, SHIELD, GHOST
     }
 
     [Header("Fireball")]
@@ -34,6 +34,15 @@ public class AbilityManager : NetworkBehaviour
     [SyncVar]
     public float remainingCooldownShield = 0;
 
+    [Header("Ghost")]
+    public GameObject ghost;
+    public float cooldownGhost = 30.0f;
+    public float ghostCastRange = 5.0f;
+    public float ghostDuration = 3.0f;
+    public GameObject ghostRangeIndicator;
+    [SyncVar]
+    public float remainingCooldownGhost = 0;
+
 
     [Header("Permanent and available")]
     [SyncVar]
@@ -45,6 +54,7 @@ public class AbilityManager : NetworkBehaviour
         CmdLearnAllAbilities();
         healingRangeIndicator.transform.localScale = new Vector3(healingCastRange, 0, healingCastRange);
         shieldRangeIndicator.transform.localScale = new Vector3(shieldCastRange, 0, shieldCastRange);
+        ghostRangeIndicator.transform.localScale = new Vector3(ghostCastRange, 0, ghostCastRange);
     }
 
     [Command]
@@ -109,6 +119,29 @@ public class AbilityManager : NetworkBehaviour
         NetworkServer.Spawn(shield);
     }
 
+
+    [Command]
+    public void CmdGhost(CharacterStats character)
+    {
+        if (!abilities.Contains(Ability.GHOST))
+        {
+            Debug.Log("Ghost unavailable");
+            return;
+        }
+        if (remainingCooldownGhost > 0)
+        {
+            return;
+        }
+        if (Vector3.Distance(character.transform.position, transform.position) > ghostCastRange)
+        {
+            return;
+        }
+        remainingCooldownGhost = cooldownGhost;
+        GameObject ghost = Instantiate(this.ghost);
+        ghost.GetComponent<Ghost>().CastAt(character, ghostDuration);
+        NetworkServer.Spawn(ghost);
+    }
+
     [Command]
     public void CmdLoseAbility()
     {
@@ -131,6 +164,7 @@ public class AbilityManager : NetworkBehaviour
             Ability.FIREBALL,
             Ability.HEALING,
             Ability.SHIELD,
+            Ability.GHOST,
         });
     }
 
@@ -140,6 +174,7 @@ public class AbilityManager : NetworkBehaviour
         remainingCooldownFireball -= dt;
         remainingCooldownHealing -= dt;
         remainingCooldownShield -= dt;
+        remainingCooldownGhost -= dt;
     }
 
     [ClientRpc]

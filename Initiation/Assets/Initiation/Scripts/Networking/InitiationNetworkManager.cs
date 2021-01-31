@@ -43,6 +43,7 @@ namespace Initiation
                 FIREBALL,
                 HEALING,
                 SHIELD,
+                GHOST,
             };
             permanentAbilitiesPerPlayer.Shuffle();
             Debug.Log("Shuffled abilities");

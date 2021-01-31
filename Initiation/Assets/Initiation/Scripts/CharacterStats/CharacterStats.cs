@@ -20,6 +20,43 @@ public class CharacterStats : NetworkBehaviour
     [SyncVar]
     public bool isShielded = false;
 
+
+    [Header("Ghost")]
+    [SyncVar]
+    public bool ghost = false;
+    private bool wasGhost = false;
+    public Material ghostBodyMaterial;
+    public Material ghostHatMaterial;
+    public MeshRenderer body;
+    public MeshRenderer hat;
+    private Material originalBodyMaterial;
+    private Material originalHatMaterial;
+
+    void Update()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        if (ghost && !wasGhost)
+        {
+            foreach (Collider c in GetComponentsInChildren<Collider>())
+            {
+                c.enabled = false;
+            }
+            wasGhost = true;
+            ChangeMaterial(true);
+        }
+        else if (!ghost && wasGhost)
+        {
+            foreach (Collider c in GetComponentsInChildren<Collider>())
+            {
+                c.enabled = true;
+            }
+            wasGhost = false;
+            ChangeMaterial(false);
+        }
+    }
     public void Awake()
     {
         health = Math.Min(health, maxHealth);
@@ -43,6 +80,21 @@ public class CharacterStats : NetworkBehaviour
             OnDie?.Invoke(this);
             dead = true;
         }
+    }
+
+    public void ChangeMaterial(bool ghost)
+    {
+        if (originalBodyMaterial == null)
+        {
+            originalBodyMaterial = body.material;
+        }
+        if (originalHatMaterial == null)
+        {
+            originalHatMaterial = hat.material;
+        }
+
+        body.material = ghost ? ghostBodyMaterial : originalBodyMaterial;
+        hat.material = ghost ? ghostHatMaterial : originalHatMaterial;
     }
 
     public void Heal(int amount)

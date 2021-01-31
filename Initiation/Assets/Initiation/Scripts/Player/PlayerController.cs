@@ -139,13 +139,26 @@ namespace Initiation
                 if (Physics.Raycast(camRay, out playerHit, Mathf.Infinity, LayerMask.GetMask("Player")))
                 {
                     CharacterStats targetCS = playerHit.collider.gameObject.GetComponent<CharacterStats>();
-                    Debug.Log(playerHit);
-                    Debug.Log(playerHit.collider.gameObject);
-                    Debug.Log(targetCS);
-                    Debug.Log(abilityManager);
                     abilityManager.CmdShield(targetCS);
                 }
                 abilityManager.shieldRangeIndicator.SetActive(false);
+            }
+
+            if (Input.GetKey(KeyCode.G))
+            {
+                abilityManager.ghostRangeIndicator.SetActive(abilityManager.abilities.Contains(AbilityManager.Ability.GHOST) && abilityManager.remainingCooldownGhost <= 0);
+            }
+            if (Input.GetKeyUp(KeyCode.G) && !Input.GetKey(KeyCode.Escape))
+            {
+                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit playerHit;
+                if (Physics.Raycast(camRay, out playerHit, Mathf.Infinity, LayerMask.GetMask("Player")))
+                {
+                    CharacterStats targetCS = playerHit.collider.gameObject.GetComponent<CharacterStats>();
+                    Debug.Log(targetCS);
+                    abilityManager.CmdGhost(targetCS);
+                }
+                abilityManager.ghostRangeIndicator.SetActive(false);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -154,15 +167,15 @@ namespace Initiation
             }
         }
 
-		private void LateUpdate()
-		{
+        private void LateUpdate()
+        {
             if(!isLocalPlayer) {
                 return;
             }
             UpdateCamera();
         }
 
-		void FixedUpdate()
+        void FixedUpdate()
         {
             if (!isLocalPlayer  || characterStats.dead)
             {
