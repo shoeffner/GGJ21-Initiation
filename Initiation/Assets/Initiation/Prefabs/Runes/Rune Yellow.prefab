@@ -7,10 +7,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3054546917795421607, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2761557732807745667, guid: c7e9686d9b88b65449cd535c13980140,
         type: 3}
       propertyPath: m_Name
-      value: Pillar Yellow
+      value: Rune Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 2761557732807745668, guid: c7e9686d9b88b65449cd535c13980140,
         type: 3}
@@ -83,6 +88,36 @@ PrefabInstance:
       value: 0.6666667
       objectReference: {fileID: 0}
     - target: {fileID: 2761557733073408665, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.7490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 3239918467088244864, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 3239918467088244864, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 3239918467088244864, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.7490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851170223682752503, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851170223682752503, guid: c7e9686d9b88b65449cd535c13980140,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851170223682752503, guid: c7e9686d9b88b65449cd535c13980140,
         type: 3}
       propertyPath: m_Color.r
       value: 0.7490196
