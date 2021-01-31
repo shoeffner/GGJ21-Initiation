@@ -40,8 +40,7 @@ public class Challenge1Manager : NetworkBehaviour
             return;
 		}
 
-        bool complete = targets.TrueForAll(t => t.isComplete);
-        print($"challenge complete {complete}");
+        bool complete = targets.TrueForAll(t => t.isComplete);        
 		if(complete) {
             RpcActivateRune();
             challengeCompleted = complete;

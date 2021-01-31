@@ -20,7 +20,6 @@ public class ChallengeTarget : NetworkBehaviour
 
 	private void OnTriggerStay(Collider other)
 	{
-        print($"{other.name} stay in target {id}");
         ChallengeCrate cc = other.GetComponent<ChallengeCrate>();
         if(cc) {
             if(cc.id == id) {
